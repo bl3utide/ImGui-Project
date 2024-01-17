@@ -7,7 +7,7 @@
 #endif
 
 // TODO change app namespace
-namespace ImGuiProject
+namespace ImGuiApp
 {
 
 // public
@@ -158,17 +158,17 @@ void setAppError(const std::string& message)
     has_error = true;
 }
 
-} // ImGuiProject
+} // ImGuiApp
 
 int main(int, char**)
 {
 #ifdef _DEBUG
-    plog::init<plog::LogFormatter>(plog::debug, ImGuiProject::DEBUG_FILE_NAME.c_str());
+    plog::init<plog::LogFormatter>(plog::debug, ImGuiApp::DEBUG_FILE_NAME.c_str());
     LOGD << "<beginning of application>";
 #endif
     try
     {
-        ImGuiProject::initialize();
+        ImGuiApp::initialize();
     }
     catch (std::exception& e)
     {
@@ -176,12 +176,12 @@ int main(int, char**)
         LOGD << e.what();
 #endif
         printf("%s", e.what());
-        ImGuiProject::finalize();
+        ImGuiApp::finalize();
         exit(EXIT_FAILURE);
     }
 
-    ImGuiProject::loop();
-    ImGuiProject::finalize();
+    ImGuiApp::loop();
+    ImGuiApp::finalize();
 
 #ifdef _DEBUG
     LOGD << "<end of application>";

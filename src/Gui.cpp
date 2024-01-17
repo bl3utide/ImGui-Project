@@ -6,7 +6,7 @@
 #include "GuiUtil.hpp"
 
 // TODO change app namespace
-namespace ImGuiProject
+namespace ImGuiApp
 {
 namespace Gui
 {
@@ -285,4 +285,4 @@ void drawGui()
 }
 
 } // Gui
-} // ImGuiProject
+} // ImGuiApp

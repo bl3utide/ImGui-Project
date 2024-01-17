@@ -16,7 +16,7 @@
 // TODO change .vcxproj.user file name
 
 // TODO change app namespace
-namespace ImGuiProject
+namespace ImGuiApp
 {
 
 #define DEF_VERSION     "1.0"
@@ -50,4 +50,4 @@ std::string getAppCopyright();
 std::string getAppTitle();
 void setAppError(const std::string& message);
 
-} // ImGuiProject
+} // ImGuiApp
