@@ -6,14 +6,14 @@
 
 #include <string>
 
-// TODO change Solution name
-// TODO change Project name
-// TODO change .sln file name
-// TODO change .vcxproj file name
-// TODO edit .sln file
-// TODO edit .vcxproj file
-// TODO change .vcxproj.filters file name
-// TODO change .vcxproj.user file name
+/*
+    - Create project template
+        Project -> Export Template -> Project Template
+
+    - Create a new project from that project template
+
+    - copy include and lib directories from template project
+*/
 
 // TODO change app namespace
 namespace ImGuiApp
