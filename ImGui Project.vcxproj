@@ -108,6 +108,14 @@
     <ClCompile Include="src\GuiUtil.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ArrayedFont.hpp" />
+    <ClInclude Include="src\Gui.hpp" />
+    <ClInclude Include="src\GuiUtil.hpp" />
+    <ClInclude Include="src\Logger.hpp" />
+    <ClInclude Include="src\Main.hpp" />
+    <ClInclude Include="src\StringUtil.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
