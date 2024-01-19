@@ -12,7 +12,7 @@
 
     - Create a new project from that project template
 
-    - copy include and lib directories from template project
+    - Copy include and lib directories from template project
 */
 
 // TODO change app namespace
