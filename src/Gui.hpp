@@ -35,7 +35,7 @@ void drawGui();
 // sub modules
 #ifdef _DEBUG
 void drawDebugMenuBar(const ImVec2 viewport_pos);
-void drawDebugContents(const int window_w, const int window_h, const State current_state);
+void drawDebugWindows(const int window_w, const int window_h, const State current_state);
 #endif
 
 } // Gui

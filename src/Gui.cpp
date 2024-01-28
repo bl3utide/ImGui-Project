@@ -299,7 +299,7 @@ void drawGui()
     }
     ImGui::End();
 #ifdef _DEBUG
-    drawDebugContents(_winw, _winh, current_state);
+    drawDebugWindows(_winw, _winh, current_state);
 #endif
 
     postDraw();

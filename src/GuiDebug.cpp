@@ -131,7 +131,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
     popDebugStyles();
 }
 
-void drawDebugContents(const int window_w, const int window_h, const State current_state)
+void drawDebugWindows(const int window_w, const int window_h, const State current_state)
 {
     ImGui::PushFont((int)Font::Debug);
 
