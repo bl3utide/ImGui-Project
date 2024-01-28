@@ -275,11 +275,32 @@ void finalize()
 
 void drawGui()
 {
+    State current_state = getState();
+
     preDraw();
 
     drawErrorModal();
 
-    // TODO draw everything
+    SDL_GetWindowSize(_window, &_winw, &_winh);
+
+    auto vp_pos = ImGui::GetWindowViewport()->WorkPos;
+    ImGui::SetNextWindowPos(vp_pos);
+    ImGui::SetNextWindowSize(ImVec2((float)_winw, (float)_winh));
+    ImGui::Begin("background", nullptr,
+        ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoBringToFrontOnFocus);
+    {
+#ifdef _DEBUG
+        drawDebugMenuBar(vp_pos);
+#endif
+
+        // TODO draw everything
+    }
+    ImGui::End();
+#ifdef _DEBUG
+    drawDebugContents(_winw, _winh, current_state);
+#endif
 
     postDraw();
 }

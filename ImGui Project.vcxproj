@@ -105,6 +105,7 @@
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Gui.cpp" />
+    <ClCompile Include="src\GuiDebug.cpp" />
     <ClCompile Include="src\GuiUtil.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
