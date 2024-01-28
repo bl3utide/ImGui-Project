@@ -104,6 +104,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
         ImGui::Separator(); //--------------------------------------------------
 
         ImGui::Text("%-24s: %d / %d", "has_error / showing?", has_error ? 1 : 0, showing_error_message ? 1 : 0);
+
         if (0 <= static_cast<int>(current_state)
             && static_cast<int>(current_state) <= static_cast<int>(State::None))
         {
