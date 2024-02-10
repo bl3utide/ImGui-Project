@@ -1,7 +1,5 @@
 #pragma once
 
-#include <imgui.h>
-
 template<class... Args>
 bool ImGuiHiddenLabel(bool func(const char*, Args...), int repeat_idx,
     const char* label, float width, Args... args)

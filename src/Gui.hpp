@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SDL.h>
-#include <imgui.h>
 #include "Main.hpp"
 
 // TODO change app namespace

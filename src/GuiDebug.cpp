@@ -1,3 +1,4 @@
+#include "Common.hpp"
 #ifdef _DEBUG
 #include "Gui.hpp"
 #include "GuiUtil.hpp"

@@ -1,8 +1,5 @@
 #pragma once
-
-#include <list>
-#include <plog/Log.h>
-#include <plog/Appenders/IAppender.h>
+#ifdef _DEBUG
 
 // TODO change app namespace
 namespace ImGuiApp
@@ -63,3 +60,4 @@ public:
 };
 
 } // plog
+#endif

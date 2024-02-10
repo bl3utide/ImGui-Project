@@ -1,5 +1,4 @@
-#define IMGUI_DEFINE_MATH_OPERATORS
-#include <imgui_internal.h>
+#include "Common.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
 
@@ -90,7 +89,7 @@ void EndGroupPanel()
 
     ImGui::SameLine(0.0f, 0.0f);
     ImGui::Dummy(ImVec2(frameHeight * 0.5f, 0.0f));
-    ImGui::Dummy(ImVec2(0.0, frameHeight - frameHeight * 0.5f - itemSpacing.y));
+    ImGui::Dummy(ImVec2(0.0, frameHeight - (frameHeight * 0.5f) - itemSpacing.y));
 
     ImGui::EndGroup();
 
