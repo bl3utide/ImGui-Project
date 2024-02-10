@@ -4,6 +4,9 @@
 #include "ArrayedFont.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
+#ifdef _DEBUG
+#include "Logger.hpp"
+#endif
 
 // TODO change app namespace
 namespace ImGuiApp

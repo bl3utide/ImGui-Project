@@ -163,7 +163,8 @@ void setAppError(const std::string& message)
 int main(int, char**)
 {
 #ifdef _DEBUG
-    plog::init<plog::LogFormatter>(plog::debug, ImGuiApp::DEBUG_FILE_NAME.c_str());
+    static plog::DebugLogAppender<plog::LogFormatter> debugLogAppender;
+    plog::init<plog::LogFormatter>(plog::debug, ImGuiApp::DEBUG_FILE_NAME.c_str()).addAppender(&debugLogAppender);
     LOGD << "<beginning of application>";
 #endif
     try

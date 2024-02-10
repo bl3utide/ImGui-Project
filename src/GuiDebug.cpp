@@ -1,6 +1,7 @@
 #ifdef _DEBUG
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
+#include "Logger.hpp"
 
 // TODO change app namespace
 namespace ImGuiApp
@@ -88,6 +89,33 @@ void drawDebugTabItemGeneral()
     }
 }
 
+void drawDebugTabItemLogger()
+{
+    if (ImGui::BeginTabItem("Logger"))
+    {
+        ImGui::Text("%d logs", Logger::debug_log.size());
+        ImGui::BeginChild("logger", ImVec2(800, 500), false, 0);
+        {
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
+
+            static int selected_index = -1;
+            auto debug_log = Logger::debug_log;
+            int log_i = 0;
+            for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
+            {
+                // TODO Text‚ðSelectable‚É•ÏX‚·‚éH
+                ImGui::Text("%ws", iter->c_str());
+                ++log_i;
+            }
+
+            ImGui::PopStyleVar();
+        }
+        ImGui::EndChild();
+
+        ImGui::EndTabItem();
+    }
+}
+
 void drawDebugWindow(bool* open, const int window_w, const int window_h,
     const State current_state)
 {
@@ -123,6 +151,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
         if (ImGui::BeginTabBar("DebugTab", ImGuiTabBarFlags_None))
         {
             drawDebugTabItemGeneral();
+            drawDebugTabItemLogger();
             ImGui::EndTabBar();
         }
     }

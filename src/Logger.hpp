@@ -1,9 +1,37 @@
 #pragma once
 
+#include <list>
 #include <plog/Log.h>
+#include <plog/Appenders/IAppender.h>
+
+// TODO change app namespace
+namespace ImGuiApp
+{
+namespace Logger
+{
+
+extern std::list<plog::util::nstring> debug_log;
+extern const size_t MAX_DEBUG_LOG_SIZE;
+
+} // Logger
+} // ImGuiApp
 
 namespace plog
 {
+
+template<class Formatter>
+class DebugLogAppender : public IAppender
+{
+public:
+    virtual void write(const Record& record)
+    {
+        namespace AppLogger = ImGuiApp::Logger;
+        plog::util::nstring str = Formatter::format(record);
+        AppLogger::debug_log.push_front(str);
+        if (AppLogger::debug_log.size() > AppLogger::MAX_DEBUG_LOG_SIZE)
+            AppLogger::debug_log.resize(AppLogger::MAX_DEBUG_LOG_SIZE);
+    }
+};
 
 class LogFormatter
 {

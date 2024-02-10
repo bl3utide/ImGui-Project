@@ -107,6 +107,7 @@
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\GuiDebug.cpp" />
     <ClCompile Include="src\GuiUtil.cpp" />
+    <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
