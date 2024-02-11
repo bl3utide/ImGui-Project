@@ -1,6 +1,6 @@
 #pragma once
 
-// TODO Issue: can't escape '%'
+// Hint: '%%' escapes '%'
 template <typename... Args>
 std::string format(const std::string& fmt, Args ... args)
 {
