@@ -1,4 +1,4 @@
-#include "Common.hpp"
+﻿#include "Common.hpp"
 #include "ArrayedFont.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
