@@ -94,18 +94,18 @@ void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
-        ImGui::Text("%d logs", Logger::debug_log.size());
+        ImGui::Text("%d logs", Logger::logs.size());
         ImGui::BeginChild("logger", ImVec2(800, 500), false, 0);
         {
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
 
             static int selected_index = -1;
-            auto debug_log = Logger::debug_log;
+            auto debug_log = Logger::logs;
             int log_i = 0;
             for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
             {
                 // TODO Text‚ðSelectable‚É•ÏX‚·‚éH
-                ImGui::Text("%ws", iter->c_str());
+                ImGui::Text("%s", iter->text.c_str());
                 ++log_i;
             }
 

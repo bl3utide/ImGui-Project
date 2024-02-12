@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include <string>
+#include <regex>
 
 #include <SDL.h>
 #include <SDL_opengl.h>
@@ -16,5 +17,6 @@
 
 #ifdef _DEBUG
 #include <plog/Log.h>
+#include <plog/Initializers/RollingFileInitializer.h>
 #include <plog/Appenders/IAppender.h>
 #endif
