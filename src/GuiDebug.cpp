@@ -14,6 +14,8 @@ namespace Gui
 bool _show_debug_menu_bar = true;
 bool _show_demo_window = false;
 bool _show_debug_window = false;
+int _selected_debug_log_index = -1;
+Logger::Log _selected_debug_log;
 
 void drawDebugMenuBar(const ImVec2 viewport_pos)
 {
@@ -44,13 +46,6 @@ void drawDebugMenuBar(const ImVec2 viewport_pos)
             ImGui::MouseCursorToHand();
             ImGui::SameLine();
             ImGui::Checkbox("debug", &_show_debug_window);
-            ImGui::MouseCursorToHand();
-
-            ImGui::SameLine();
-            if (ImGui::Button("add a log"))
-            {
-                LOGD << "a new log";
-            }
             ImGui::MouseCursorToHand();
         }
     }
@@ -101,26 +96,19 @@ void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
-        static int selected_index = -1;
         ImGui::Text("%d logs", Logger::logs.size());
-        if (selected_index != -1)
-        {
-            ImGui::SameLine();
-            ImGui::Text("and log.%d is selected", selected_index);
-        }
 
-        ImGui::BeginChild("logger_list", ImVec2(800, 500), false, 0);
+        ImGui::BeginChild("logger_list", ImVec2(800, 430), false, 0);
         {
-            // TODO ログが最大数を超えて追加された時、選択中のidが繰り上がってリストから消えた時の、詳細表示の対処
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
             auto debug_log = Logger::logs;
             for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
             {
-                bool is_selected = selected_index == iter->log_id;
+                bool is_selected = _selected_debug_log_index == iter->log_id;
                 if (ImGui::Selectable(format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
                 {
-                    // TODO 右側に新しくChildWindowを表示して、その中に選択しているログの詳細を表示する
-                    selected_index = iter->log_id;
+                    _selected_debug_log = *iter;
+                    _selected_debug_log_index = iter->log_id;
                 }
                 ImGui::MouseCursorToHand();
             }
@@ -128,6 +116,20 @@ void drawDebugTabItemLogger()
             ImGui::PopStyleVar();
         }
         ImGui::EndChild();
+
+        ImGui::Separator();
+
+        if (_selected_debug_log_index != -1)
+        {
+            ImGui::BeginChild("logger_detail", ImVec2(800, 70), false, 0);
+            {
+                ImGui::Text("Log ID %d [%s]", _selected_debug_log.log_id, _selected_debug_log.category.c_str());
+                ImGui::Text("%s", _selected_debug_log.timestamp.c_str());
+                ImGui::Text("%s (LINE %s)", _selected_debug_log.function.c_str(), _selected_debug_log.line.c_str());
+                ImGui::Text("%s", _selected_debug_log.text.c_str());
+            }
+            ImGui::EndChild();
+        }
 
         ImGui::EndTabItem();
     }
