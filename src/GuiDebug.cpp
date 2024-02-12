@@ -45,6 +45,13 @@ void drawDebugMenuBar(const ImVec2 viewport_pos)
             ImGui::SameLine();
             ImGui::Checkbox("debug", &_show_debug_window);
             ImGui::MouseCursorToHand();
+
+            ImGui::SameLine();
+            if (ImGui::Button("add a log"))
+            {
+                LOGD << "a new log";
+            }
+            ImGui::MouseCursorToHand();
         }
     }
     ImGui::End();
@@ -94,19 +101,28 @@ void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
+        static int selected_index = -1;
         ImGui::Text("%d logs", Logger::logs.size());
-        ImGui::BeginChild("logger", ImVec2(800, 500), false, 0);
+        if (selected_index != -1)
         {
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
+            ImGui::SameLine();
+            ImGui::Text("and log.%d is selected", selected_index);
+        }
 
-            static int selected_index = -1;
+        ImGui::BeginChild("logger_list", ImVec2(800, 500), false, 0);
+        {
+            // TODO ログが最大数を超えて追加された時、選択中のidが繰り上がってリストから消えた時の、詳細表示の対処
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
             auto debug_log = Logger::logs;
-            int log_i = 0;
             for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
             {
-                // TODO TextをSelectableに変更する？
-                ImGui::Text("%s", iter->text.c_str());
-                ++log_i;
+                bool is_selected = selected_index == iter->log_id;
+                if (ImGui::Selectable(format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
+                {
+                    // TODO 右側に新しくChildWindowを表示して、その中に選択しているログの詳細を表示する
+                    selected_index = iter->log_id;
+                }
+                ImGui::MouseCursorToHand();
             }
 
             ImGui::PopStyleVar();

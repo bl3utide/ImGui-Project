@@ -9,24 +9,28 @@ namespace ImGuiApp
 namespace Logger
 {
 
-struct Log
+class Log
 {
+public:
+    int log_id;
     std::string timestamp;
     std::string category;
     std::string function;
     std::string line;
     std::string text;
 
-    Log() : timestamp(""), category(""), function(""), line(""), text("")
+    Log() : log_id(0), timestamp(""), category(""), function(""), line(""), text("")
     {}
 
-    // TODO Ç®ÇªÇÁÇ≠ïÅí ÇÕÇ±ÇÍÇégÇ§
     Log(const std::string& message)
     {
         std::regex re("^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}) (\\S+) \\[([^@]+)@(\\d+)\\] (.+)$");
         std::smatch m;
         if (std::regex_search(message, m, re))
         {
+            log_id = _next_log_id;
+            ++_next_log_id;
+
             timestamp = m[1];
             category = m[2];
             function = m[3];
@@ -34,6 +38,9 @@ struct Log
             text = m[5];
         }
     }
+
+private:
+    static int _next_log_id;
 };
 
 extern std::list<Log> logs;
