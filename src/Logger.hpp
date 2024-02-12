@@ -23,6 +23,7 @@ public:
     {}
 
     Log(const std::string& message)
+        : log_id(0), timestamp(""), category(""), function(""), line(""), text("")
     {
         std::regex re("^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}) (\\S+) \\[([^@]+)@(\\d+)\\] (.+)$");
         std::smatch m;
@@ -45,10 +46,6 @@ private:
 
 extern std::list<Log> logs;
 extern const size_t MAX_DISPLAY_LOGS;
-/* TODO 上のバージョンがうまくいったら、下のバージョンは消す
-extern std::list<plog::util::nstring> debug_log;
-extern const size_t MAX_DEBUG_LOG_SIZE;
-*/
 
 } // Logger
 } // ImGuiApp
@@ -68,11 +65,6 @@ public:
         AppLogger::logs.push_front(log);
         if (AppLogger::logs.size() > AppLogger::MAX_DISPLAY_LOGS)
             AppLogger::logs.resize(AppLogger::MAX_DISPLAY_LOGS);
-        /* 上のバージョンがうまくいったら、下のバージョンは消す
-        AppLogger::debug_log.push_front(str);
-        if (AppLogger::debug_log.size() > AppLogger::MAX_DEBUG_LOG_SIZE)
-            AppLogger::debug_log.resize(AppLogger::MAX_DEBUG_LOG_SIZE);
-            */
     }
 };
 
