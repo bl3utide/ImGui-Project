@@ -1,4 +1,4 @@
-#ifdef _DEBUG
+﻿#ifdef _DEBUG
 #include "Common.hpp"
 #include "Logger.hpp"
 

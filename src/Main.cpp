@@ -1,4 +1,4 @@
-#include "Common.hpp"
+﻿#include "Common.hpp"
 #include "Main.hpp"
 #include "Gui.hpp"
 #include "StringUtil.hpp"

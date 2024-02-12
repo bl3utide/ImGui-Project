@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 template<class... Args>
 bool ImGuiHiddenLabel(bool func(const char*, Args...), int repeat_idx,
