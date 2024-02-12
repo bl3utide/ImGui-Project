@@ -14,6 +14,8 @@ namespace Gui
 bool _show_debug_menu_bar = true;
 bool _show_demo_window = false;
 bool _show_debug_window = false;
+int _selected_debug_log_index = -1;
+Logger::Log _selected_debug_log;
 
 void drawDebugMenuBar(const ImVec2 viewport_pos)
 {
@@ -94,24 +96,40 @@ void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
-        ImGui::Text("%d logs", Logger::debug_log.size());
-        ImGui::BeginChild("logger", ImVec2(800, 500), false, 0);
+        ImGui::Text("%d logs", Logger::logs.size());
+
+        ImGui::BeginChild("logger_list", ImVec2(800, 430), false, 0);
         {
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
-
-            static int selected_index = -1;
-            auto debug_log = Logger::debug_log;
-            int log_i = 0;
+            auto debug_log = Logger::logs;
             for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
             {
-                // TODO Text‚ðSelectable‚É•ÏX‚·‚éH
-                ImGui::Text("%ws", iter->c_str());
-                ++log_i;
+                bool is_selected = _selected_debug_log_index == iter->log_id;
+                if (ImGui::Selectable(format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
+                {
+                    _selected_debug_log = *iter;
+                    _selected_debug_log_index = iter->log_id;
+                }
+                ImGui::MouseCursorToHand();
             }
 
             ImGui::PopStyleVar();
         }
         ImGui::EndChild();
+
+        ImGui::Separator();
+
+        if (_selected_debug_log_index != -1)
+        {
+            ImGui::BeginChild("logger_detail", ImVec2(800, 70), false, 0);
+            {
+                ImGui::Text("Log ID %d [%s]", _selected_debug_log.log_id, _selected_debug_log.category.c_str());
+                ImGui::Text("%s", _selected_debug_log.timestamp.c_str());
+                ImGui::Text("%s (LINE %s)", _selected_debug_log.function.c_str(), _selected_debug_log.line.c_str());
+                ImGui::Text("%s", _selected_debug_log.text.c_str());
+            }
+            ImGui::EndChild();
+        }
 
         ImGui::EndTabItem();
     }
