@@ -1,4 +1,4 @@
-/*
+﻿/*
     (Project Name)
     Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
 */

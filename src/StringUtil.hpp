@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Hint: '%%' escapes '%'
 template <typename... Args>
