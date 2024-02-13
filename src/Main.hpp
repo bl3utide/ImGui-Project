@@ -12,7 +12,7 @@
 
     - Copy include and lib directories from template project
 */
-
+//test
 // TODO change app namespace
 namespace ImGuiApp
 {
