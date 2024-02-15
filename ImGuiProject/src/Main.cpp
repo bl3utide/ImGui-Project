@@ -24,10 +24,10 @@ const char* STATE_STR[static_cast<int>(State::_COUNT_)] =
 #endif
 
 // private
-const char* APP_VERSION = DEF_VERSION;
-const std::string APP_COPYRIGHT = format("Copyright (C) %d %s", DEF_DEV_YR, DEF_DEV_BY);
-const char* APP_TITLE = DEF_TITLE;
-const char* APP_NAME = DEF_NAME;
+const char* APP_NAME = DEF_APP_NAME;
+const char* APP_VERSION = DEF_APP_VERSION;
+const std::string APP_COPYRIGHT = format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
+const char* APP_TITLE = DEF_APP_TITLE;
 State _state;
 State _next_state = State::None;            // the next state that change in the next loop
 #ifdef _DEBUG
