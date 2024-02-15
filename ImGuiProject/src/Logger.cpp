@@ -1,5 +1,5 @@
-﻿#ifdef _DEBUG
-#include "Common.hpp"
+﻿#include "Common.hpp"
+#ifdef _DEBUG
 #include "Logger.hpp"
 
 // TODO change app namespace
