@@ -1,17 +1,24 @@
 ﻿/*
-    (Project Name)
-    Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
-*/
-#pragma once
+    ImGui Project
+    v0.1
 
-/*
+    - Dependencies
+      SDL       2.0.10
+      imgui     1.87 dock
+      plog      1.1.10
+
     - Create project template
-        Project -> Export Template -> Project Template
+      Project -> Export Template -> Project Template
 
     - Create a new project from that project template
 
     - Copy include and lib directories from template project
 */
+/*
+    (Project Name)
+    Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
+*/
+#pragma once
 
 // TODO change app namespace
 namespace ImGuiApp
