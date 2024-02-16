@@ -112,33 +112,6 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\plog\Appenders\AndroidAppender.h" />
-    <ClInclude Include="include\plog\Appenders\ArduinoAppender.h" />
-    <ClInclude Include="include\plog\Appenders\ColorConsoleAppender.h" />
-    <ClInclude Include="include\plog\Appenders\ConsoleAppender.h" />
-    <ClInclude Include="include\plog\Appenders\DebugOutputAppender.h" />
-    <ClInclude Include="include\plog\Appenders\DynamicAppender.h" />
-    <ClInclude Include="include\plog\Appenders\EventLogAppender.h" />
-    <ClInclude Include="include\plog\Appenders\IAppender.h" />
-    <ClInclude Include="include\plog\Appenders\RollingFileAppender.h" />
-    <ClInclude Include="include\plog\Converters\NativeEOLConverter.h" />
-    <ClInclude Include="include\plog\Converters\UTF8Converter.h" />
-    <ClInclude Include="include\plog\Formatters\CsvFormatter.h" />
-    <ClInclude Include="include\plog\Formatters\FuncMessageFormatter.h" />
-    <ClInclude Include="include\plog\Formatters\MessageOnlyFormatter.h" />
-    <ClInclude Include="include\plog\Formatters\TxtFormatter.h" />
-    <ClInclude Include="include\plog\Helpers\AscDump.h" />
-    <ClInclude Include="include\plog\Helpers\HexDump.h" />
-    <ClInclude Include="include\plog\Helpers\PrintVar.h" />
-    <ClInclude Include="include\plog\Init.h" />
-    <ClInclude Include="include\plog\Initializers\ConsoleInitializer.h" />
-    <ClInclude Include="include\plog\Initializers\RollingFileInitializer.h" />
-    <ClInclude Include="include\plog\Log.h" />
-    <ClInclude Include="include\plog\Logger.h" />
-    <ClInclude Include="include\plog\Record.h" />
-    <ClInclude Include="include\plog\Severity.h" />
-    <ClInclude Include="include\plog\Util.h" />
-    <ClInclude Include="include\plog\WinApi.h" />
     <ClInclude Include="src\ArrayedFont.hpp" />
     <ClInclude Include="src\Gui.hpp" />
     <ClInclude Include="src\GuiUtil.hpp" />
