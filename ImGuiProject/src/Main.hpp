@@ -9,7 +9,7 @@
 #pragma once
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 
 #define DEF_APP_NAME        "ImGuiProject"      // TODO fix app name
