@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{66D0CB62-B3D7-4FCB-8C86-409DEE290AC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SDL2", "SDL2", "{E02622F8-4F66-4111-BCDF-C12B1ED1FCC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -50,6 +54,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6A4B3F4-4B45-4925-86E8-26EA3750CAA0} = {66D0CB62-B3D7-4FCB-8C86-409DEE290AC0}
+		{9D433DE1-1664-3AA4-95BE-0327D029F9F7} = {E02622F8-4F66-4111-BCDF-C12B1ED1FCC6}
+		{F5D2BDBF-D473-3032-8920-C965CC67DB24} = {E02622F8-4F66-4111-BCDF-C12B1ED1FCC6}
+		{E02622F8-4F66-4111-BCDF-C12B1ED1FCC6} = {66D0CB62-B3D7-4FCB-8C86-409DEE290AC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDEC41B8-0852-440D-AFB6-32F4EF4FBA07}
