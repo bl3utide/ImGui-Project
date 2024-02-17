@@ -4,7 +4,7 @@
 #include "StringUtil.hpp"
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 namespace Logger
 {
@@ -59,7 +59,7 @@ class DebugLogAppender : public IAppender
 public:
     virtual void write(const Record& record)
     {
-        namespace AppLogger = ImGuiApp::Logger;
+        namespace AppLogger = ImGuiProject::Logger;
         std::string str = Formatter::format(record);
         AppLogger::Log log = AppLogger::Log(str);
         AppLogger::logs.push_front(log);

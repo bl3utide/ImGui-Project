@@ -1,5 +1,6 @@
 ﻿#include "Common.hpp"
 #include "ArrayedFont.hpp"
+#include "Error.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
 #ifdef _DEBUG
@@ -7,7 +8,7 @@
 #endif
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 namespace Gui
 {

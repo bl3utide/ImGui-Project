@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "Main.hpp"
+#include "State.hpp"
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 namespace Gui
 {

@@ -1,6 +1,6 @@
 ﻿/*
     ImGui Project
-    v0.1.1
+    v0.2.0
 */
 /*
     (Project Name)
@@ -9,7 +9,7 @@
 #pragma once
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 
 #define DEF_APP_NAME        "ImGuiProject"      // TODO fix app name
@@ -18,29 +18,8 @@ namespace ImGuiApp
 #define DEF_APP_DEV_YR      2024                // TODO fix dev year
 #define DEF_APP_TITLE       "ImGui Project"     // TODO fix app title
 
-enum class State : int
-{
-    InitInternalData,
-    Idle,
-    None,
-    _COUNT_
-};
-
-extern bool has_error;
-extern std::string error_message;
-extern bool showing_error_message;
-#ifdef _DEBUG
-extern const char* STATE_STR[static_cast<int>(State::_COUNT_)];
-#endif
-
-State getState();
-#ifdef _DEBUG
-State getNextState();
-#endif
-void setNextState(State state);
 std::string getAppVersion();
 std::string getAppCopyright();
 std::string getAppTitle();
-void setAppError(const std::string& message);
 
 } // ImGuiApp

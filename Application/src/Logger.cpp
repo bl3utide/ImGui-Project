@@ -3,7 +3,7 @@
 #include "Logger.hpp"
 
 // TODO change app namespace
-namespace ImGuiApp
+namespace ImGuiProject
 {
 namespace Logger
 {

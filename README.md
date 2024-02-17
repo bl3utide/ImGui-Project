@@ -1,4 +1,4 @@
-# ImGui Project (for Visual Studio)
+﻿# ImGui Project (for Visual Studio)
 C++ Project template using SDL2 and ImGui in Visual Studio
 
 ## Dependencies (Latest version)
@@ -7,5 +7,12 @@ C++ Project template using SDL2 and ImGui in Visual Studio
 - [plog 1.1.10](https://github.com/SergiusTheBest/plog/tree/1.1.10)
 
 ## Changelog
+
+### v0.2.0
+- 依存するライブラリをソリューションディレクトリに格納
+- アプリケーションのベース名前空間の名称をソリューション名(リポジトリ名)と統一
+- メインのプロジェクトの名前をApplicationに変更
+- StateモジュールとErrorモジュールをMainモジュールから独立
+
 ### v0.1.1
-- SDL���C�u�������\�[�X����R���p�C������悤�ɕύX
+- SDLライブラリをソースからコンパイルするように変更
