@@ -1,5 +1,6 @@
 ﻿#include "Common.hpp"
 #ifdef _DEBUG
+#include "Error.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
 #include "Logger.hpp"

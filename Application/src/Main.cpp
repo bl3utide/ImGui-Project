@@ -1,6 +1,8 @@
 ﻿#include "Common.hpp"
-#include "Main.hpp"
+#include "Error.hpp"
 #include "Gui.hpp"
+#include "Main.hpp"
+#include "State.hpp"
 #include "StringUtil.hpp"
 #ifdef _DEBUG
 #include "Logger.hpp"
@@ -10,26 +12,11 @@
 namespace ImGuiProject
 {
 
-// public
-bool has_error = false;
-std::string error_message;
-bool showing_error_message = false;
-#ifdef _DEBUG
-const char* STATE_STR[static_cast<int>(State::_COUNT_)] =
-{
-    "InitInternalData",
-    "Idle",
-    "None"
-};
-#endif
-
 // private
 const char* APP_NAME = DEF_APP_NAME;
 const char* APP_VERSION = DEF_APP_VERSION;
 const std::string APP_COPYRIGHT = format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
 const char* APP_TITLE = DEF_APP_TITLE;
-State _state;
-State _next_state = State::None;            // the next state that change in the next loop
 #ifdef _DEBUG
 const std::string DEBUG_FILE_NAME = format("%s.debug.log", APP_NAME);
 #endif
@@ -40,8 +27,6 @@ void initialize()
     {
         throw std::runtime_error("SDL_Init error");
     }
-
-    _state = State::InitInternalData;
 
     Gui::initialize(APP_TITLE);
 }
@@ -69,7 +54,7 @@ void loop()
 
         try
         {
-            switch (_state)
+            switch (getState())
             {
                 case State::InitInternalData:
                     setNextState(State::Idle);
@@ -88,7 +73,7 @@ void loop()
             setAppError(format("General error: %s", error.what()));
         }
 
-        if (_next_state == State::None)
+        if (getNextState() == State::None)
         {
             try
             {
@@ -104,37 +89,11 @@ void loop()
         }
         else
         {
-            _state = _next_state;
-            _next_state = State::None;
-#ifdef _DEBUG
-            LOGD << "State changed to [" << static_cast<int>(_state) << "]"
-                << STATE_STR[static_cast<int>(_state)];
-#endif
+            transitionState();
         }
 
         SDL_Delay(5);
     }
-}
-
-State getState()
-{
-    return _state;
-}
-
-#ifdef _DEBUG
-State getNextState()
-{
-    return _next_state;
-}
-#endif
-
-void setNextState(State state)
-{
-    _next_state = state;
-#ifdef _DEBUG
-    LOGD << "setNextState: [" << static_cast<int>(_next_state) << "]"
-        << STATE_STR[static_cast<int>(_next_state)];
-#endif
 }
 
 std::string getAppVersion()
@@ -150,12 +109,6 @@ std::string getAppCopyright()
 std::string getAppTitle()
 {
     return APP_TITLE;
-}
-
-void setAppError(const std::string& message)
-{
-    error_message = message;
-    has_error = true;
 }
 
 } // ImGuiApp

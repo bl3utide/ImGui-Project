@@ -1,5 +1,6 @@
 ﻿#include "Common.hpp"
 #include "ArrayedFont.hpp"
+#include "Error.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
 #ifdef _DEBUG

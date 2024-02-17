@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Main.hpp"
+#include "State.hpp"
 
 // TODO change app namespace
 namespace ImGuiProject
