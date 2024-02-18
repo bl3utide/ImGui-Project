@@ -94,7 +94,7 @@ void initFonts()
 #endif
 }
 
-void setUiStyle()
+void setUiStyle() noexcept
 {
     ImGuiStyle* style = &ImGui::GetStyle();
     /* TODO set app-specific UI styles
