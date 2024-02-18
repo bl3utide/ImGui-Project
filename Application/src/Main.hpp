@@ -18,8 +18,8 @@ namespace ImGuiProject
 #define DEF_APP_DEV_YR      2024                // TODO fix dev year
 #define DEF_APP_TITLE       "ImGui Project"     // TODO fix app title
 
-std::string getAppVersion();
-std::string getAppCopyright();
-std::string getAppTitle();
+std::string getAppVersion() noexcept;
+std::string getAppCopyright() noexcept;
+std::string getAppTitle() noexcept;
 
 } // ImGuiApp
