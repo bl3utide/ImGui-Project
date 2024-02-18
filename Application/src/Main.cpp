@@ -31,7 +31,7 @@ void initialize()
     Gui::initialize(APP_TITLE);
 }
 
-void finalize()
+void finalize() noexcept
 {
     Gui::finalize();
 
@@ -96,17 +96,17 @@ void loop()
     }
 }
 
-std::string getAppVersion()
+std::string getAppVersion() noexcept
 {
     return APP_VERSION;
 }
 
-std::string getAppCopyright()
+std::string getAppCopyright() noexcept
 {
     return APP_COPYRIGHT;
 }
 
-std::string getAppTitle()
+std::string getAppTitle() noexcept
 {
     return APP_TITLE;
 }

@@ -266,7 +266,7 @@ void initialize(const char* app_title)
     setUiStyle();
 }
 
-void finalize()
+void finalize() noexcept
 {
     ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
