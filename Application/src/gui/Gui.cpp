@@ -1,5 +1,5 @@
 ﻿#include "Common.hpp"
-#include "ArrayedFont.hpp"
+#include "compressed/ArrayedFont.hpp"
 #include "Error.hpp"
 #include "Gui.hpp"
 #include "GuiUtil.hpp"
