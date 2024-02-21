@@ -117,6 +117,7 @@
     <ClInclude Include="src\compressed\ArrayedFont.hpp" />
     <ClInclude Include="src\Error.hpp" />
     <ClInclude Include="src\gui\Gui.hpp" />
+    <ClInclude Include="src\gui\GuiColor.hpp" />
     <ClInclude Include="src\gui\GuiUtil.hpp" />
     <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\Main.hpp" />

@@ -2,6 +2,7 @@
 #include "Error.hpp"
 #include "compressed/ArrayedFont.hpp"
 #include "gui/Gui.hpp"
+#include "gui/GuiColor.hpp"
 #include "gui/GuiUtil.hpp"
 #ifdef _DEBUG
 #include "Logger.hpp"
