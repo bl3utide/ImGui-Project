@@ -1,8 +1,8 @@
 ﻿#include "Common.hpp"
 #ifdef _DEBUG
 #include "Error.hpp"
-#include "Gui.hpp"
-#include "GuiUtil.hpp"
+#include "gui/Gui.hpp"
+#include "gui/GuiUtil.hpp"
 #include "Logger.hpp"
 
 // TODO change app namespace
