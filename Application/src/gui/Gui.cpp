@@ -17,7 +17,8 @@ namespace Gui
 // private
 SDL_Window* _window;
 SDL_GLContext _gl_context;
-int _winw, _winh;
+const int WINDOW_WIDTH = 1024;
+const int WINDOW_HEIGHT = 768;
 
 void initFonts()
 {
@@ -284,11 +285,12 @@ void drawGui()
 
     drawErrorModal();
 
-    SDL_GetWindowSize(_window, &_winw, &_winh);
+    int window_width, window_height;
+    SDL_GetWindowSize(_window, &window_width, &window_height);
 
     auto vp_pos = ImGui::GetWindowViewport()->WorkPos;
     ImGui::SetNextWindowPos(vp_pos);
-    ImGui::SetNextWindowSize(ImVec2((float)_winw, (float)_winh));
+    ImGui::SetNextWindowSize(ImVec2((float)window_width, (float)window_height));
     ImGui::Begin("background", nullptr,
         ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
@@ -302,7 +304,7 @@ void drawGui()
     }
     ImGui::End();
 #ifdef _DEBUG
-    drawDebugWindows(_winw, _winh, current_state);
+    drawDebugWindows(window_width, window_height, current_state);
 #endif
 
     postDraw();
