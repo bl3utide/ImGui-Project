@@ -48,12 +48,14 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <TargetName>$(SolutionName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <GenerateManifest>false</GenerateManifest>
+    <TargetName>$(SolutionName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -63,7 +65,7 @@
       <ConformanceMode>false</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)SDL2\include;$(SolutionDir)ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)SDL2\include;$(SolutionDir)ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Common.hpp</PrecompiledHeaderFile>
     </ClCompile>
@@ -85,7 +87,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)SDL2\include;$(SolutionDir)ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)SDL2\include;$(SolutionDir)ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Common.hpp</PrecompiledHeaderFile>
     </ClCompile>
@@ -106,23 +108,24 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Error.cpp" />
-    <ClCompile Include="src\Gui.cpp" />
-    <ClCompile Include="src\GuiDebug.cpp" />
-    <ClCompile Include="src\GuiUtil.cpp" />
+    <ClCompile Include="src\gui\Gui.cpp" />
+    <ClCompile Include="src\gui\GuiDebug.cpp" />
+    <ClCompile Include="src\gui\GuiUtil.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\State.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ArrayedFont.hpp" />
+    <ClInclude Include="src\compressed\ArrayedFont.hpp" />
     <ClInclude Include="src\Error.hpp" />
-    <ClInclude Include="src\Gui.hpp" />
-    <ClInclude Include="src\GuiUtil.hpp" />
+    <ClInclude Include="src\gui\Gui.hpp" />
+    <ClInclude Include="src\gui\GuiColor.hpp" />
+    <ClInclude Include="src\gui\GuiUtil.hpp" />
     <ClInclude Include="src\Logger.hpp" />
     <ClInclude Include="src\Main.hpp" />
     <ClInclude Include="src\Common.hpp" />
     <ClInclude Include="src\State.hpp" />
-    <ClInclude Include="src\StringUtil.hpp" />
+    <ClInclude Include="src\util\StringUtil.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

@@ -1,6 +1,8 @@
 ﻿#include "Common.hpp"
 #include "Error.hpp"
+#ifdef _DEBUG
 #include "Logger.hpp"
+#endif
 
 // TODO change app namespace
 namespace ImGuiProject

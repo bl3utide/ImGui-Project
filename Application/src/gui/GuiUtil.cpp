@@ -1,17 +1,17 @@
 ﻿#include "Common.hpp"
-#include "Gui.hpp"
-#include "GuiUtil.hpp"
+#include "gui/Gui.hpp"
+#include "gui/GuiUtil.hpp"
 
 namespace ImGui
 {
 
-void MouseCursorToHand()
+void MouseCursorToHand() noexcept
 {
     if (IsItemHovered())
         SetMouseCursor(ImGuiMouseCursor_Hand);
 }
 
-void TextColoredU32(const ImU32& col, const char* fmt, ...)
+void TextColoredU32(const ImU32& col, const char* fmt, ...) noexcept
 {
     va_list args;
     va_start(args, fmt);
@@ -140,12 +140,12 @@ void EndGroupPanel()
     ImGui::EndGroup();
 }
 
-void PushFont(int font_id)
+void PushFont(int font_id) noexcept
 {
     PushFont(ImGui::GetIO().Fonts->Fonts[font_id]);
 }
 
-bool IsCustomKeyPressed(ImGuiCustomKey key, bool repeat)
+bool IsCustomKeyPressed(ImGuiCustomKey key, bool repeat) noexcept
 {
     switch (key)
     {
