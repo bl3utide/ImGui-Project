@@ -1,11 +1,11 @@
-﻿#include "Common.hpp"
-#include "Error.hpp"
-#include "compressed/ArrayedFont.hpp"
-#include "gui/Gui.hpp"
-#include "gui/GuiColor.hpp"
-#include "gui/GuiUtil.hpp"
+﻿#include "common.hpp"
+#include "error.hpp"
+#include "compressed/arrayed_font.hpp"
+#include "gui/gui.hpp"
+#include "gui/gui_color.hpp"
+#include "gui/gui_util.hpp"
 #ifdef _DEBUG
-#include "Logger.hpp"
+#include "logger.hpp"
 #endif
 
 // TODO change app namespace

@@ -1,11 +1,11 @@
-﻿#include "Common.hpp"
-#include "Error.hpp"
-#include "Main.hpp"
-#include "State.hpp"
-#include "gui/Gui.hpp"
-#include "util/StringUtil.hpp"
+﻿#include "common.hpp"
+#include "error.hpp"
+#include "main.hpp"
+#include "state.hpp"
+#include "gui/gui.hpp"
+#include "util/string_util.hpp"
 #ifdef _DEBUG
-#include "Logger.hpp"
+#include "logger.hpp"
 #endif
 
 // TODO change app namespace
