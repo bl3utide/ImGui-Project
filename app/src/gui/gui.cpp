@@ -3,6 +3,7 @@
 #include "compressed/arrayed_font.hpp"
 #include "gui/gui.hpp"
 #include "gui/gui_color.hpp"
+#include "gui/gui_font.hpp"
 #include "gui/gui_util.hpp"
 #ifdef _DEBUG
 #include "logger.hpp"
@@ -19,82 +20,6 @@ SDL_Window* _window;
 SDL_GLContext _gl_context;
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
-
-void initFonts()
-{
-    ImFont* font;
-
-    // TITLE
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::TITLE_DATA,
-        ArrayedFont::TITLE_SIZE,
-        24.0f);
-    IM_ASSERT(font);
-
-    // VERSION
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::SECTION_DATA,
-        ArrayedFont::SECTION_SIZE,
-        16.0f);
-    IM_ASSERT(font);
-
-    // OPTION_ITEM_TEXT
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::SECTION_DATA,
-        ArrayedFont::SECTION_SIZE,
-        18.0f);
-    IM_ASSERT(font);
-
-    // OPTION_ITEM_TEXT_BOLD
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::SECTION_BOLD_DATA,
-        ArrayedFont::SECTION_BOLD_SIZE,
-        18.0f);
-    IM_ASSERT(font);
-
-    // SECTION_TEXT
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::SECTION_DATA,
-        ArrayedFont::SECTION_SIZE,
-        22.0f);
-    IM_ASSERT(font);
-
-    // TEXT
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::TEXT_DATA,
-        ArrayedFont::TEXT_SIZE,
-        16.0f);
-    IM_ASSERT(font);
-
-    // TEXT_BOLD
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::TEXT_BOLD_DATA,
-        ArrayedFont::TEXT_BOLD_SIZE,
-        16.0f);
-    IM_ASSERT(font);
-
-#ifdef _DEBUG
-    // DEBUG
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::DEBUG_DATA,
-        ArrayedFont::DEBUG_SIZE,
-        14.0f);
-    IM_ASSERT(font);
-
-    // DEBUG_PROC_HEAD
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::DEBUG_DATA,
-        ArrayedFont::DEBUG_SIZE,
-        20.0f);
-
-    // DEBUG_PROC_HEX
-    font = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedTTF(
-        ArrayedFont::DEBUG_DATA,
-        ArrayedFont::DEBUG_SIZE,
-        18.0f);
-    IM_ASSERT(font);
-#endif
-}
 
 void setUiStyle() noexcept
 {
@@ -264,7 +189,10 @@ void initialize(const char* app_title)
     ImGui_ImplSDL2_InitForOpenGL(_window, _gl_context);
     ImGui_ImplOpenGL2_Init();
 
-    initFonts();
+    addAllFonts();
+#ifdef _DEBUG
+    addAllFontsDebug();
+#endif
     setUiStyle();
 }
 
