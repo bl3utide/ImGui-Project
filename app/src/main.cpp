@@ -3,7 +3,6 @@
 #include "main.hpp"
 #include "state.hpp"
 #include "gui/gui.hpp"
-#include "util/string_util.hpp"
 #ifdef _DEBUG
 #include "logger.hpp"
 #endif

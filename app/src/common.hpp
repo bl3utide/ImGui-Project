@@ -20,3 +20,5 @@
 #include <plog/Initializers/RollingFileInitializer.h>
 #include <plog/Appenders/IAppender.h>
 #endif
+
+#include "util/string_util.hpp"
