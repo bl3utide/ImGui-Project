@@ -11,6 +11,8 @@ namespace ImGuiProject
 {
 namespace Gui
 {
+namespace Debug
+{
 
 // private
 bool _show_debug_menu_bar = true;
@@ -198,6 +200,7 @@ void drawDebugWindows(const int window_w, const int window_h, const State curren
     ImGui::PopFont();
 }
 
+} // Debug
 } // Gui
 } // ImGuiApp
 #endif

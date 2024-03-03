@@ -232,14 +232,14 @@ void drawGui()
         ImGuiWindowFlags_NoBringToFrontOnFocus);
     {
 #ifdef _DEBUG
-        drawDebugMenuBar(vp_pos);
+        Debug::drawDebugMenuBar(vp_pos);
 #endif
 
         // TODO draw everything
     }
     ImGui::End();
 #ifdef _DEBUG
-    drawDebugWindows(window_width, window_height, current_state);
+    Debug::drawDebugWindows(window_width, window_height, current_state);
 #endif
 
     postDraw();
