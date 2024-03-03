@@ -3,7 +3,6 @@
 #include "main.hpp"
 #include "state.hpp"
 #include "gui/gui.hpp"
-#include "util/string_util.hpp"
 #ifdef _DEBUG
 #include "logger.hpp"
 #endif
@@ -13,10 +12,10 @@ namespace ImGuiProject
 {
 
 // private
-const char* APP_NAME = DEF_APP_NAME;
-const char* APP_VERSION = DEF_APP_VERSION;
+const std::string APP_NAME = DEF_APP_NAME;
+const std::string APP_VERSION = DEF_APP_VERSION;
 const std::string APP_COPYRIGHT = format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
-const char* APP_TITLE = DEF_APP_TITLE;
+const std::string APP_TITLE = DEF_APP_TITLE;
 #ifdef _DEBUG
 const std::string DEBUG_FILE_NAME = format("%s.debug.log", APP_NAME);
 #endif
@@ -28,7 +27,7 @@ void initialize()
         throw std::runtime_error("SDL_Init error");
     }
 
-    Gui::initialize(APP_TITLE);
+    Gui::initialize(APP_TITLE, APP_VERSION, APP_COPYRIGHT);
 }
 
 void finalize() noexcept
@@ -94,21 +93,6 @@ void loop()
 
         SDL_Delay(5);
     }
-}
-
-std::string getAppVersion() noexcept
-{
-    return APP_VERSION;
-}
-
-std::string getAppCopyright() noexcept
-{
-    return APP_COPYRIGHT;
-}
-
-std::string getAppTitle() noexcept
-{
-    return APP_TITLE;
 }
 
 } // ImGuiApp

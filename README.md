@@ -8,6 +8,12 @@ C++ Project template using SDL2 and ImGui in Visual Studio
 
 ## Changelog
 
+### v0.2.3
+- string_util.hppはプリコンパイル済みヘッダーに含まれるようになった
+- FontモジュールをGUIモジュールから切り離した
+- Gui::initializeがアプリケーションのメタ情報を受け取るように変更し、メインヘッダーは他のモジュールから参照されなくなった
+- GUI(デバッグ)モジュールをGui::Debug名前空間の中に移動させた
+
 ### v0.2.2
 - 依存するライブラリをサブモジュールとして追加
 - メインプロジェクトのプロジェクト名を`App`に変更

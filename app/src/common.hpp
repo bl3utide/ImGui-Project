@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <list>
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include <regex>
 
@@ -20,3 +21,5 @@
 #include <plog/Initializers/RollingFileInitializer.h>
 #include <plog/Appenders/IAppender.h>
 #endif
+
+#include "util/string_util.hpp"
