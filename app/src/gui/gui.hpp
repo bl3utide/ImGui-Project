@@ -8,7 +8,7 @@ namespace ImGuiProject
 namespace Gui
 {
 
-void initialize(const char* app_title);
+void initialize(const std::string& title, const std::string& version, const std::string& copyright);
 void finalize() noexcept;
 void drawGui();
 

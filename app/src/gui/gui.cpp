@@ -16,6 +16,9 @@ namespace Gui
 {
 
 // private
+std::string _app_title;
+std::string _app_version;
+std::string _app_copyright;
 SDL_Window* _window;
 SDL_GLContext _gl_context;
 const int WINDOW_WIDTH = 1024;
@@ -155,8 +158,12 @@ void postDraw()
     SDL_GL_SwapWindow(_window);
 }
 
-void initialize(const char* app_title)
+void initialize(const std::string& title, const std::string& version, const std::string& copyright)
 {
+    _app_title = title;
+    _app_version = version;
+    _app_copyright = copyright;
+
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -165,7 +172,7 @@ void initialize(const char* app_title)
     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
-    _window = SDL_CreateWindow(app_title,
+    _window = SDL_CreateWindow(_app_title.c_str(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL);
