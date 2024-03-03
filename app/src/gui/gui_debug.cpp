@@ -2,6 +2,7 @@
 #ifdef _DEBUG
 #include "error.hpp"
 #include "gui/gui.hpp"
+#include "gui/gui_font.hpp"
 #include "gui/gui_util.hpp"
 #include "logger.hpp"
 
@@ -9,6 +10,8 @@
 namespace ImGuiProject
 {
 namespace Gui
+{
+namespace Debug
 {
 
 // private
@@ -20,7 +23,7 @@ Logger::Log _selected_debug_log;
 
 void drawDebugMenuBar(const ImVec2 viewport_pos)
 {
-    ImGui::PushFont((int)Font::Debug);
+    ImGui::PushFont((int)FontDebug::Text);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.35f, 0.35f, 0.35f, 0.65f));
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(ImVec2(center.x - 140.0f, viewport_pos.y), ImGuiCond_Always);
@@ -182,7 +185,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
 
 void drawDebugWindows(const int window_w, const int window_h, const State current_state)
 {
-    ImGui::PushFont((int)Font::Debug);
+    ImGui::PushFont((int)FontDebug::Text);
 
     if (_show_demo_window)
     {
@@ -197,6 +200,7 @@ void drawDebugWindows(const int window_w, const int window_h, const State curren
     ImGui::PopFont();
 }
 
+} // Debug
 } // Gui
 } // ImGuiApp
 #endif
