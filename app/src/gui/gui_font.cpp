@@ -1,5 +1,5 @@
 ﻿#include "common.hpp"
-#include "compressed//arrayed_font.hpp"
+#include "compressed/arrayed_font.hpp"
 #include "gui/gui_font.hpp"
 
 // TODO change app namespace
