@@ -8,6 +8,10 @@ C++ Project template using SDL2 and ImGui in Visual Studio
 
 ## Changelog
 
+### v0.2.4
+- VERSIONINFOリソースを追加
+- デバッグログのファイルが正常に出力されるように修正
+
 ### v0.2.3
 - string_util.hppはプリコンパイル済みヘッダーに含まれるようになった
 - FontモジュールをGUIモジュールから切り離した
