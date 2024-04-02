@@ -2,6 +2,7 @@
 #include "error.hpp"
 #include "main.hpp"
 #include "state.hpp"
+#include "config/config.hpp"
 #include "gui/gui.hpp"
 #ifdef _DEBUG
 #include "logger.hpp"
@@ -14,10 +15,11 @@ namespace ImGuiProject
 // private
 const std::string APP_NAME = DEF_APP_NAME;
 const std::string APP_VERSION = DEF_APP_VERSION;
-const std::string APP_COPYRIGHT = format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
+const std::string APP_COPYRIGHT = StringUtil::format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
 const std::string APP_TITLE = DEF_APP_TITLE;
+const std::string CONFIG_FILE_NAME = StringUtil::format("%s.ini", APP_NAME.c_str());
 #ifdef _DEBUG
-const std::string DEBUG_FILE_NAME = format("%s.debug.log", APP_NAME.c_str());
+const std::string DEBUG_FILE_NAME = StringUtil::format("%s.debug.log", APP_NAME.c_str());
 #endif
 
 void initialize()
@@ -28,10 +30,12 @@ void initialize()
     }
 
     Gui::initialize(APP_TITLE, APP_VERSION, APP_COPYRIGHT);
+    Config::initialize();
 }
 
 void finalize() noexcept
 {
+    Config::save(CONFIG_FILE_NAME);
     Gui::finalize();
 
     SDL_Quit();
@@ -48,7 +52,7 @@ void loop()
         {
             ImGui_ImplSDL2_ProcessEvent(&event);
             if (event.type == SDL_QUIT)
-                running = false;
+                setNextState(State::PrepareToExit);
         }
 
         try
@@ -56,9 +60,18 @@ void loop()
             switch (getState())
             {
                 case State::InitInternalData:
+                    setNextState(State::ApplyConfig);
+                    break;
+                case State::ApplyConfig:
+                    Config::load(CONFIG_FILE_NAME);
+                    // TODO apply config data to all corresponding modules
                     setNextState(State::Idle);
                     break;
                 case State::Idle:
+                    break;
+                case State::PrepareToExit:
+                    // TODO update config data from all corresponding modules
+                    running = false;
                     break;
                 default:
                     break;
@@ -69,7 +82,7 @@ void loop()
 #ifdef _DEBUG
             LOGD << error.what();
 #endif
-            setAppError(format("General error: %s", error.what()));
+            setAppError(StringUtil::format("General error: %s", error.what()));
         }
 
         if (getNextState() == State::None)
@@ -83,7 +96,7 @@ void loop()
 #ifdef _DEBUG
                 LOGD << error.what();
 #endif
-                setAppError(format("Gui error: %s", error.what()));
+                setAppError(StringUtil::format("Gui error: %s", error.what()));
             }
         }
         else
@@ -119,6 +132,8 @@ int main(int, char**)
     }
 
     ImGuiProject::loop();
+
+    // TODO try-catch
     ImGuiProject::finalize();
 
 #ifdef _DEBUG
