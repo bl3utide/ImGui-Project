@@ -22,4 +22,6 @@
 #include <plog/Appenders/IAppender.h>
 #endif
 
+#include <mini/ini.h>
+
 #include "util/string_util.hpp"

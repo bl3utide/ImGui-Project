@@ -7,7 +7,9 @@ namespace ImGuiProject
 enum class State : int
 {
     InitInternalData,
+    ApplyConfig,
     Idle,
+    PrepareToExit,
     None,
     _COUNT_
 };
