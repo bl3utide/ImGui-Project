@@ -20,7 +20,7 @@ namespace Debug
 // private
 bool _show_debug_menu_bar = true;
 bool _show_demo_window = false;
-bool _show_debug_window = false;
+bool _show_debug_window = true;
 int _selected_debug_log_index = -1;
 Logger::Log _selected_debug_log;
 
@@ -193,6 +193,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
 {
     pushDebugStyles();
 
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
     ImGui::Begin("debug", open,
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize |
         ImGuiWindowFlags_NoTitleBar);
