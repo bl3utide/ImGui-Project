@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "error.hpp"
 
 // TODO change app namespace
 namespace ImGuiProject
@@ -55,6 +56,8 @@ extern std::mutex dlog_mutex;
 #endif
 
 void initialize() noexcept;
+void error(const UncontinuableException& uce, bool no_debug = false) noexcept;
+void debug(const std::string& message) noexcept;
 
 } // Logger
 } // ImGuiApp
