@@ -9,7 +9,6 @@
 */
 #include "common.hpp"
 #include "error.hpp"
-#include "main.hpp"
 #include "state.hpp"
 #include "config/config.hpp"
 #include "gui/gui.hpp"
