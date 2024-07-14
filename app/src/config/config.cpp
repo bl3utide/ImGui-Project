@@ -12,18 +12,18 @@ namespace Config
 {
 
 // private
-std::string _config_file_name;
-std::unordered_map<Key, Cv> _cv_by_key;
+std::string config_file_name_;
+std::unordered_map<Key, Cv> cv_by_key_;
 
 const Cv& getCv(const Key key) noexcept
 {
-    return _cv_by_key.at(key);
+    return cv_by_key_.at(key);
 }
 
 void load() noexcept
 {
     mINI::INIStructure read_is;
-    mINI::INIFile file = mINI::INIFile(_config_file_name);
+    mINI::INIFile file = mINI::INIFile(config_file_name_);
 
     if (file.read(read_is))
     {
@@ -32,7 +32,7 @@ void load() noexcept
         for (int key_i = 0; key_i < static_cast<int>(Key::_COUNT_); ++key_i)
         {
             Key key = static_cast<Key>(key_i);
-            Reader::iniValueToCv(read_is, _cv_by_key.at(key));
+            Reader::iniValueToCv(read_is, cv_by_key_.at(key));
         }
     }
     else
@@ -44,12 +44,12 @@ void load() noexcept
 void save() noexcept
 {
     mINI::INIStructure write_is;
-    mINI::INIFile file = mINI::INIFile(_config_file_name);
+    mINI::INIFile file = mINI::INIFile(config_file_name_);
 
     for (int key_i = 0; key_i < static_cast<int>(Key::_COUNT_); ++key_i)
     {
         Key key = static_cast<Key>(key_i);
-        Writer::cvToIni(_cv_by_key.at(key), write_is);
+        Writer::cvToIni(cv_by_key_.at(key), write_is);
     }
 
     if (!file.write(write_is, true))
@@ -69,7 +69,7 @@ const T getConfigValue(const Key key)
 template<>
 const std::string getConfigValue(const Key key)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::String)
         throw new std::runtime_error(StringUtil::format(GET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "string"));
@@ -80,7 +80,7 @@ const std::string getConfigValue(const Key key)
 template<>
 const int getConfigValue(const Key key)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::Int)
         throw new std::runtime_error(StringUtil::format(GET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "int"));
@@ -91,7 +91,7 @@ const int getConfigValue(const Key key)
 template<>
 const bool getConfigValue(const Key key)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::Bool)
         throw new std::runtime_error(StringUtil::format(GET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "bool"));
@@ -110,7 +110,7 @@ void setConfigValue(const Key key, const T value)
 template<>
 void setConfigValue(const Key key, const std::string value)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::String)
         throw new std::runtime_error(StringUtil::format(SET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "string"));
@@ -121,7 +121,7 @@ void setConfigValue(const Key key, const std::string value)
 template<>
 void setConfigValue(const Key key, const int value)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::Int)
         throw new std::runtime_error(StringUtil::format(SET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "int"));
@@ -132,7 +132,7 @@ void setConfigValue(const Key key, const int value)
 template<>
 void setConfigValue(const Key key, const bool value)
 {
-    Cv& cv = _cv_by_key.at(key);
+    Cv& cv = cv_by_key_.at(key);
 
     if (cv.type() != Cv::Type::Bool)
         throw new std::runtime_error(StringUtil::format(SET_CONFIG_VALUE_TYPE_ERR_TEXT, cv.key_name(), "bool"));
@@ -143,14 +143,14 @@ void setConfigValue(const Key key, const bool value)
 
 void initialize()
 {
-    _config_file_name = StringUtil::format("%s.ini", APP_NAME.c_str());
+    config_file_name_ = StringUtil::format("%s.ini", APP_NAME.c_str());
 
     // TODO add ini keys initialization
     // ex)
     // [NewSection]
-    _cv_by_key.insert({ Key::NewKey1,   Cv(Section::NewSection, Key::NewKey1, std::string()) });
-    _cv_by_key.insert({ Key::NewKey2,   Cv(Section::NewSection, Key::NewKey2, 1, 10, 1) });
-    _cv_by_key.insert({ Key::NewKey3,   Cv(Section::NewSection, Key::NewKey3, false) });
+    cv_by_key_.insert({ Key::NewKey1,   Cv(Section::NewSection, Key::NewKey1, std::string()) });
+    cv_by_key_.insert({ Key::NewKey2,   Cv(Section::NewSection, Key::NewKey2, 1, 10, 1) });
+    cv_by_key_.insert({ Key::NewKey3,   Cv(Section::NewSection, Key::NewKey3, false) });
 }
 
 } // Config
