@@ -20,8 +20,6 @@ namespace Debug
 bool _show_debug_menu_bar = true;
 bool _show_demo_window = false;
 bool _show_debug_window = true;
-int _selected_debug_log_index = -1;
-Logger::DisplayFormattedDebugLog _selected_debug_log;
 
 void drawDebugMenuBar(const ImVec2 viewport_pos)
 {
@@ -148,40 +146,63 @@ void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
-        if (Logger::debug_logs.size() > 0)
-            ImGui::Text("%d logs", Logger::debug_logs.front().log_id + 1);
+        std::unique_lock lock(Logger::dlog_mutex);
+
+        if (Logger::dlog.size() > 0)
+            ImGui::Text("%d logs", Logger::dlog.back().log_id + 1);
         else
             ImGui::Text("no logs");
 
         ImGui::BeginChild("logger_list", ImVec2(800, 430), false, 0);
         {
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
-            auto debug_log = Logger::debug_logs;
-            for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
+            int selected_index = 0;
+            std::vector<Logger::DisplayFormattedDebugLog> dlog_copy = Logger::dlog;
+            for (auto iter = dlog_copy.begin(); iter != dlog_copy.end(); ++iter)
             {
-                bool is_selected = _selected_debug_log_index == iter->log_id;
+                bool is_selected = selected_index == Logger::dlog_selected_index;
                 if (ImGui::Selectable(StringUtil::format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
                 {
-                    _selected_debug_log = *iter;
-                    _selected_debug_log_index = iter->log_id;
+                    Logger::dlog_selected_index = selected_index;
+                    Logger::dlog_selected = *iter;
                 }
                 GuiUtil::MouseCursorToHand();
+                ++selected_index;
             }
 
-            ImGui::PopStyleVar();
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.0f);
         }
         ImGui::EndChild();
+        if (ImGui::IsItemHovered())
+        {
+            auto f = []()
+            {
+                auto idx = Logger::dlog_selected_index;
+                Logger::dlog_selected = Logger::DisplayFormattedDebugLog(Logger::dlog[idx]);
+            };
+
+            if (GuiUtil::IsCustomKeyPressed(GuiUtil::ImGuiCustomKey::Up, true) && Logger::dlog_selected_index > 0)
+            {
+                --Logger::dlog_selected_index;
+                f();
+            }
+            else if (GuiUtil::IsCustomKeyPressed(GuiUtil::ImGuiCustomKey::Down, true) && Logger::dlog_selected_index < Logger::dlog.size() - 1)
+            {
+                ++Logger::dlog_selected_index;
+                f();
+            }
+        }
 
         ImGui::Separator();
 
-        if (_selected_debug_log_index != -1)
+        if (Logger::dlog_selected_index != -1)
         {
             ImGui::BeginChild("logger_detail", ImVec2(800, 70), false, 0);
             {
-                ImGui::Text("Log ID %d [%s]", _selected_debug_log.log_id, _selected_debug_log.category.c_str());
-                ImGui::Text("%s", _selected_debug_log.timestamp.c_str());
-                ImGui::Text("%s (LINE %s)", _selected_debug_log.function.c_str(), _selected_debug_log.line.c_str());
-                ImGui::Text("%s", _selected_debug_log.text.c_str());
+                ImGui::Text("Log ID %d [%s]", Logger::dlog_selected.log_id, Logger::dlog_selected.category.c_str());
+                ImGui::Text("%s", Logger::dlog_selected.timestamp.c_str());
+                ImGui::Text("%s (LINE %s)", Logger::dlog_selected.function.c_str(), Logger::dlog_selected.line.c_str());
+                ImGui::Text("%s", Logger::dlog_selected.text.c_str());
             }
             ImGui::EndChild();
         }

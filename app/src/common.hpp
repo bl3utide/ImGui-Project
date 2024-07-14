@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <string>
 #include <regex>
+#include <mutex>
 
 #include <SDL.h>
 #include <SDL_opengl.h>
