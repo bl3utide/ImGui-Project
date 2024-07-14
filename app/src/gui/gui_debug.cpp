@@ -216,8 +216,7 @@ void drawDebugTabItemLogger()
     }
 }
 
-void drawDebugWindow(bool* open, const int window_w, const int window_h,
-    const State current_state)
+void drawDebugWindow(bool* open, int window_w, int window_h, State current_state)
 {
     pushDebugStyles();
 
