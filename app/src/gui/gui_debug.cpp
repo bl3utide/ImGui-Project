@@ -157,7 +157,8 @@ void drawDebugTabItemLogger()
         {
             int selected_index = 0;
             std::vector<Logger::DisplayFormattedDebugLog> dlog_copy = Logger::dlog;
-            for (auto iter = dlog_copy.cbegin(); iter != dlog_copy.cend(); ++iter)
+            auto dlog_copy_end = dlog_copy.cend();
+            for (auto iter = dlog_copy.cbegin(); iter != dlog_copy_end; ++iter)
             {
                 bool is_selected = selected_index == Logger::dlog_selected_index;
                 if (ImGui::Selectable(StringUtil::format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
