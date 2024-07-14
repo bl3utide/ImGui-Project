@@ -6,9 +6,9 @@ namespace ImGuiProject
 {
 
 // public
-bool has_error = false;
+bool has_error;
 std::string error_message;
-bool showing_error_message = false;
+bool showing_error_message;
 
 // private
 const std::string MESSAGE_FMT
@@ -92,6 +92,12 @@ UncontinuableException::UncontinuableException(const AnyCauseException& ace, Err
 UncontinuableException::UncontinuableException(const char* message, ErrorWhen when, ErrorCause cause)
     : BaseException(message, when, cause)
 {
+}
+
+void initError() noexcept
+{
+    has_error = false;
+    showing_error_message = false;
 }
 
 void setAppError(const std::string& message) noexcept

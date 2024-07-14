@@ -37,6 +37,7 @@ void initialize()
     Logger::initialize();
     Logger::debug("<beginning of application>");
 
+    initError();
     initState();
 
     try
