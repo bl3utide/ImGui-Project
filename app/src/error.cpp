@@ -13,13 +13,21 @@ bool has_error = false;
 std::string error_message;
 bool showing_error_message = false;
 
-ContinuableException::ContinuableException(const char* message)
-    : exception(message)
+const std::unordered_map<ContinuableException::Cause, std::string> ContinuableException::message_
+{
+};
+
+ContinuableException::ContinuableException(const Cause cause)
+    : exception(message_.at(cause).c_str())
 {
 }
 
-UncontinuableException::UncontinuableException(const char* message)
-    : runtime_error(message)
+const std::unordered_map<UncontinuableException::Cause, std::string> UncontinuableException::_message
+{
+};
+
+UncontinuableException::UncontinuableException(const Cause cause)
+    : runtime_error(message_.at(cause).c_str())
 {
 }
 
