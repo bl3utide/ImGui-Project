@@ -18,6 +18,20 @@
 namespace ImGuiProject
 {
 
+enum class InitSection : int
+{
+    Sdl,
+    Config,
+    Gui,
+    Image,
+    Connector,
+
+    _COUNT_,
+};
+
+// private
+std::bitset<static_cast<int>(InitSection::_COUNT_)> _init_flag;
+
 void initialize()
 {
     Logger::initialize();
@@ -31,11 +45,13 @@ void initialize()
         {
             throw UncontinuableException("SDL_Init error", ERROR_WHEN_INIT, ERROR_CAUSE_INIT_SDL);
         }
+        _init_flag.set(static_cast<int>(InitSection::Sdl));
 
         try
         {
             Logger::debug("start init GUI");
             Gui::initialize();
+            _init_flag.set(static_cast<int>(InitSection::Gui));
         }
         catch (std::exception& e)
         {
@@ -46,6 +62,7 @@ void initialize()
         {
             Logger::debug("start init Config");
             Config::initialize();
+            _init_flag.set(static_cast<int>(InitSection::Config));
         }
         catch (std::exception& e)
         {
@@ -62,10 +79,14 @@ void initialize()
 
 void finalize() noexcept
 {
-    Config::save();
-    Gui::finalize();
+    if (_init_flag[static_cast<int>(InitSection::Config)])
+        Config::save();
 
-    SDL_Quit();
+    if (_init_flag[static_cast<int>(InitSection::Gui)])
+        Gui::finalize();
+
+    if (_init_flag[static_cast<int>(InitSection::Sdl)])
+        SDL_Quit();
 
     Logger::debug("<end of application>");
 }

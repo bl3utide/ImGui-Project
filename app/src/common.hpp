@@ -8,6 +8,7 @@
 #include <regex>
 #include <mutex>
 #include <functional>
+#include <bitset>
 
 #include <SDL.h>
 #include <SDL_opengl.h>
