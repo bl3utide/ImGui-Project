@@ -59,7 +59,7 @@ void BaseException::setErrorMessage() noexcept
     }
 }
 
-const std::uint16_t BaseException::getErrorCode() const noexcept
+std::uint16_t BaseException::getErrorCode() const noexcept
 {
     return static_cast<std::uint16_t>(when_) << 8 | cause_;
 }
@@ -79,7 +79,7 @@ ContinuableException::ContinuableException(const char* message, ErrorWhen when, 
 {
 }
 
-const State ContinuableException::getNextState() const noexcept
+State ContinuableException::getNextState() const noexcept
 {
     return next_state_;
 }
