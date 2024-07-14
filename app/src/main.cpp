@@ -26,6 +26,7 @@ void initialize()
     {
         throw std::runtime_error("SDL_Init error");
     }
+    Logger::debug("<beginning of application>");
 
     Gui::initialize();
     Config::initialize();
@@ -37,6 +38,8 @@ void finalize() noexcept
     Gui::finalize();
 
     SDL_Quit();
+
+    Logger::debug("<end of application>");
 }
 
 void loop()
