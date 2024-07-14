@@ -70,7 +70,7 @@ BEGIN
             VALUE "CompanyName", "TODO: <CompanyName>"
             VALUE "FileDescription", "TODO: <Description>"
             VALUE "FileVersion", "1.0.0.0"
-            VALUE "InternalName", "TODO: <SolutionName>.exe"
+            VALUE "InternalName", "TODO: <SolutionName>"
             VALUE "LegalCopyright", "Copyright (C) 2024"
             VALUE "OriginalFilename", "TODO: <SolutionName>.exe"
             VALUE "ProductName", "TODO: <Product Name>"
