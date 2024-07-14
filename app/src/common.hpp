@@ -22,4 +22,5 @@
 
 #include <mini/ini.h>
 
+#include "util/gui_util.hpp"
 #include "util/string_util.hpp"

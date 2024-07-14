@@ -4,7 +4,6 @@
 #include "gui/gui.hpp"
 #include "gui/gui_color.hpp"
 #include "gui/gui_font.hpp"
-#include "gui/gui_util.hpp"
 #ifdef _DEBUG
 #include "logger.hpp"
 #endif
@@ -105,14 +104,14 @@ void drawErrorModal()
             | ImGuiWindowFlags_NoMove
             | ImGuiWindowFlags_NoTitleBar))
         {
-            ImGui::PushFont((int)Font::OptionItemBold);
+            GuiUtil::PushFont((int)Font::OptionItemBold);
             ImGui::Text("Application error");
             ImGui::PopFont();
             ImGui::Separator();
 
             ImGui::Dummy(ImVec2(400.0f, 10.0f));
 
-            ImGui::PushFont((int)Font::OptionItem);
+            GuiUtil::PushFont((int)Font::OptionItem);
             ImGui::TextWrapped(error_message.c_str());
 
             ImGui::Dummy(ImVec2(400.0f, 10.0f));
@@ -124,7 +123,7 @@ void drawErrorModal()
                 showing_error_message = false;
                 ImGui::CloseCurrentPopup();
             }
-            ImGui::MouseCursorToHand();
+            GuiUtil::MouseCursorToHand();
             ImGui::PopStyleVar();
             ImGui::PopFont();
 

@@ -6,7 +6,6 @@
 #include "config/section.hpp"
 #include "gui/gui.hpp"
 #include "gui/gui_font.hpp"
-#include "gui/gui_util.hpp"
 #include "logger.hpp"
 
 // TODO change app namespace
@@ -26,7 +25,7 @@ Logger::Log _selected_debug_log;
 
 void drawDebugMenuBar(const ImVec2 viewport_pos)
 {
-    ImGui::PushFont((int)FontDebug::Text);
+    GuiUtil::PushFont((int)FontDebug::Text);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.35f, 0.35f, 0.35f, 0.65f));
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(ImVec2(center.x - 140.0f, viewport_pos.y), ImGuiCond_Always);
@@ -44,16 +43,16 @@ void drawDebugMenuBar(const ImVec2 viewport_pos)
         {
             if (ImGui::Button(">")) _show_debug_menu_bar = true;
         }
-        ImGui::MouseCursorToHand();
+        GuiUtil::MouseCursorToHand();
         ImGui::PopStyleVar();
 
         if (_show_debug_menu_bar)
         {
             ImGui::Checkbox("demo", &_show_demo_window);
-            ImGui::MouseCursorToHand();
+            GuiUtil::MouseCursorToHand();
             ImGui::SameLine();
             ImGui::Checkbox("debug", &_show_debug_window);
-            ImGui::MouseCursorToHand();
+            GuiUtil::MouseCursorToHand();
         }
     }
     ImGui::End();
@@ -163,7 +162,7 @@ void drawDebugTabItemLogger()
                     _selected_debug_log = *iter;
                     _selected_debug_log_index = iter->log_id;
                 }
-                ImGui::MouseCursorToHand();
+                GuiUtil::MouseCursorToHand();
             }
 
             ImGui::PopStyleVar();
@@ -236,7 +235,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
 
 void drawDebugWindows(const int window_w, const int window_h, const State current_state)
 {
-    ImGui::PushFont((int)FontDebug::Text);
+    GuiUtil::PushFont((int)FontDebug::Text);
 
     if (_show_demo_window)
     {
