@@ -11,7 +11,7 @@ enum class State : int
     Idle,
     PrepareToExit,
     None,
-    _COUNT_
+    _COUNT_,
 };
 
 #ifdef _DEBUG
