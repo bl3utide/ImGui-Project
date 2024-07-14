@@ -22,7 +22,7 @@ ContinuableException::ContinuableException(const Cause cause)
 {
 }
 
-const std::unordered_map<UncontinuableException::Cause, std::string> UncontinuableException::_message
+const std::unordered_map<UncontinuableException::Cause, std::string> UncontinuableException::message_
 {
 };
 
