@@ -19,7 +19,7 @@ constexpr ErrorCause    ERROR_CAUSE_INIT_GUI    = 0x01;
 constexpr ErrorCause    ERROR_CAUSE_INIT_CONFIG = 0x04;
 
 constexpr ErrorWhen     ERROR_WHEN_STATE_PROCESS    = 0xF0;
-constexpr ErrorWhen     ERROR_WHEN_RESRVED_FUNC     = 0xF1;
+constexpr ErrorWhen     ERROR_WHEN_RESERVED_FUNC    = 0xF1;
 
 constexpr ErrorWhen     ERROR_WHEN_UNDEFINED    = 0xFF;
 constexpr ErrorCause    ERROR_CAUSE_UNDEFINED   = 0xFF;

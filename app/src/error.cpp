@@ -20,7 +20,7 @@ const std::unordered_map<ErrorWhen, std::string> MESSAGE
 {
     { ERROR_WHEN_INIT,          "Failed to initialize" },
     { ERROR_WHEN_STATE_PROCESS, "Failed in process for current state"},
-    { ERROR_WHEN_RESRVED_FUNC,  "Failed in execution reserved function"},
+    { ERROR_WHEN_RESERVED_FUNC, "Failed in execution reserved function"},
 };
 
 AnyCauseException::AnyCauseException(const char* message, ErrorCause cause)
