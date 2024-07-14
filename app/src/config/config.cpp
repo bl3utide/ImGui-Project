@@ -15,7 +15,7 @@ namespace Config
 std::string config_file_name_;
 std::unordered_map<Key, Cv> cv_by_key_;
 
-const Cv& getCv(const Key key) noexcept
+const Cv& getCv(Key key) noexcept
 {
     return cv_by_key_.at(key);
 }
@@ -61,13 +61,13 @@ void save() noexcept
 const std::string GET_CONFIG_VALUE_TYPE_ERR_TEXT = "Config key '%s' is not %s";
 
 template<typename T>
-const T getConfigValue(const Key key)
+T getConfigValue(Key key)
 {
     throw new std::runtime_error("Unexpected type of Cv");
 }
 
 template<>
-const std::string getConfigValue(const Key key)
+std::string getConfigValue(Key key)
 {
     Cv& cv = cv_by_key_.at(key);
 
@@ -78,7 +78,7 @@ const std::string getConfigValue(const Key key)
 }
 
 template<>
-const int getConfigValue(const Key key)
+int getConfigValue(Key key)
 {
     Cv& cv = cv_by_key_.at(key);
 
@@ -89,7 +89,7 @@ const int getConfigValue(const Key key)
 }
 
 template<>
-const bool getConfigValue(const Key key)
+bool getConfigValue(Key key)
 {
     Cv& cv = cv_by_key_.at(key);
 
@@ -102,13 +102,13 @@ const bool getConfigValue(const Key key)
 const std::string SET_CONFIG_VALUE_TYPE_ERR_TEXT = "The type of config key '%s' is not %s";
 
 template<typename T>
-void setConfigValue(const Key key, const T value)
+void setConfigValue(Key key, T value)
 {
     throw new std::runtime_error("Unexpected type of value");
 }
 
 template<>
-void setConfigValue(const Key key, const std::string value)
+void setConfigValue(Key key, std::string value)
 {
     Cv& cv = cv_by_key_.at(key);
 
@@ -119,7 +119,7 @@ void setConfigValue(const Key key, const std::string value)
 }
 
 template<>
-void setConfigValue(const Key key, const int value)
+void setConfigValue(Key key, int value)
 {
     Cv& cv = cv_by_key_.at(key);
 
@@ -130,7 +130,7 @@ void setConfigValue(const Key key, const int value)
 }
 
 template<>
-void setConfigValue(const Key key, const bool value)
+void setConfigValue(Key key, bool value)
 {
     Cv& cv = cv_by_key_.at(key);
 
