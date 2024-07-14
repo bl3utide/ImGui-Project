@@ -2,7 +2,7 @@
 
 namespace GuiUtil
 {
-template<class... Args>
+template<typename... Args>
 bool ImGuiHiddenLabel(bool func(const char*, Args...), int repeat_idx,
     const char* label, float width, Args... args)
 {
@@ -17,7 +17,7 @@ bool ImGuiHiddenLabel(bool func(const char*, Args...), int repeat_idx,
     offset: label text width
     width: control width
 */
-template<class... Args>
+template<typename... Args>
 bool ImGuiLeftLabel(bool func(const char*, Args...), int repeat_idx,
     const char* label, bool hide_label, float offset, float width,
     Args... args)
