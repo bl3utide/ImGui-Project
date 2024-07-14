@@ -49,17 +49,6 @@ void initialize()
 
         try
         {
-            Logger::debug("start init GUI");
-            Gui::initialize();
-            init_flag_.set(static_cast<int>(InitSection::Gui));
-        }
-        catch (std::exception& e)
-        {
-            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_GUI);
-        }
-
-        try
-        {
             Logger::debug("start init Config");
             Config::initialize();
             init_flag_.set(static_cast<int>(InitSection::Config));
@@ -67,6 +56,17 @@ void initialize()
         catch (std::exception& e)
         {
             throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_CONFIG);
+        }
+
+        try
+        {
+            Logger::debug("start init GUI");
+            Gui::initialize();
+            init_flag_.set(static_cast<int>(InitSection::Gui));
+        }
+        catch (std::exception& e)
+        {
+            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_GUI);
         }
     }
     catch (UncontinuableException& uce)
