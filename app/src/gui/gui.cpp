@@ -28,7 +28,7 @@ const int WINDOW_HEIGHT = 768;
 
 void setUiStyle() noexcept
 {
-    ImGuiStyle* style = &ImGui::GetStyle();
+    auto style = &ImGui::GetStyle();
     /* TODO set app-specific UI styles
     style->WindowPadding = ImVec2(6.0f, 6.0f);
     style->WindowRounding = 0.0f;
@@ -99,7 +99,7 @@ void drawErrorModal()
             showing_error_message = true;
         }
 
-        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        const auto center = ImGui::GetMainViewport()->GetCenter();
         ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 
         if (ImGui::BeginPopupModal("app_error", &showing_error_message,
@@ -216,7 +216,7 @@ void finalize() noexcept
 
 void drawGui()
 {
-    State current_state = getState();
+    const auto current_state = getState();
 
     preDraw();
 
