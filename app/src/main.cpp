@@ -126,14 +126,13 @@ int main(int, char**)
 #ifdef _DEBUG
         LOGD << e.what();
 #endif
-        printf("%s", e.what());
+        LOGE << e.what();
+        ImGuiProject::Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", e.what());
         ImGuiProject::finalize();
         exit(EXIT_FAILURE);
     }
 
     ImGuiProject::loop();
-
-    // TODO try-catch
     ImGuiProject::finalize();
 
 #ifdef _DEBUG
