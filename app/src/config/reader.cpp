@@ -37,7 +37,7 @@ void iniValueToCv(mINI::INIStructure& is, Cv& cv) noexcept
         Logger::debug(StringUtil::format("Loaded config value [%s]%s: %s",
             cv.section_name().c_str(),
             cv.key_name().c_str(),
-            cv.cv().c_str()).c_str());
+            cv.cv().c_str()));
     }
     else
     {
@@ -45,7 +45,7 @@ void iniValueToCv(mINI::INIStructure& is, Cv& cv) noexcept
         Logger::debug(StringUtil::format("Loaded DEFAULT config value [%s]%s: %s",
             cv.section_name().c_str(),
             cv.key_name().c_str(),
-            cv.cv().c_str()).c_str());
+            cv.cv().c_str()));
     }
 }
 

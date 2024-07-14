@@ -63,5 +63,10 @@ void debug(const char* message) noexcept
 #endif
 }
 
+void debug(const std::string& message) noexcept
+{
+    debug(message.c_str());
+}
+
 } // Logger
 } // ImGuiApp
