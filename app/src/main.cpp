@@ -4,9 +4,7 @@
 #include "state.hpp"
 #include "config/config.hpp"
 #include "gui/gui.hpp"
-#ifdef _DEBUG
 #include "logger.hpp"
-#endif
 
 // TODO change app namespace
 namespace ImGuiProject
@@ -21,6 +19,7 @@ const std::string CONFIG_FILE_NAME = StringUtil::format("%s.ini", APP_NAME.c_str
 #ifdef _DEBUG
 const std::string DEBUG_FILE_NAME = StringUtil::format("%s.debug.log", APP_NAME.c_str());
 #endif
+const std::string ERROR_FILE_NAME = StringUtil::format("%s.error.log", APP_NAME.c_str());
 
 void initialize()
 {
@@ -112,9 +111,10 @@ void loop()
 
 int main(int, char**)
 {
+    plog::init<plog::ErrorLogFormatter>(plog::error, ImGuiProject::ERROR_FILE_NAME.c_str());
 #ifdef _DEBUG
-    static plog::DebugLogAppender<plog::LogFormatter> debugLogAppender;
-    plog::init<plog::LogFormatter>(plog::debug, ImGuiProject::DEBUG_FILE_NAME.c_str()).addAppender(&debugLogAppender);
+    static plog::DebugLogAppender<plog::DebugLogFormatter> debugLogAppender;
+    plog::init<plog::DebugLogFormatter>(plog::debug, ImGuiProject::DEBUG_FILE_NAME.c_str()).addAppender(&debugLogAppender);
     LOGD << "<beginning of application>";
 #endif
     try
