@@ -35,8 +35,9 @@ std::bitset<static_cast<int>(InitSection::_COUNT_)> init_flag_;
 void initialize()
 {
     Logger::initialize();
-
     Logger::debug("<beginning of application>");
+
+    initState();
 
     try
     {
