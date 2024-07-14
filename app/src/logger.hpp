@@ -77,7 +77,7 @@ public:
 
         if (AppLogger::dlog.size() > AppLogger::MAX_SIZE_DISPLAY_DLOG)
         {
-            AppLogger::dlog.erase(AppLogger::dlog.begin());
+            AppLogger::dlog.erase(AppLogger::dlog.cbegin());
             --AppLogger::dlog_selected_index;
         }
     }
