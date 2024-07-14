@@ -149,9 +149,13 @@ void drawDebugTabItemLogger()
         std::unique_lock lock(Logger::dlog_mutex);
 
         if (Logger::dlog.size() > 0)
+        {
             ImGui::Text("%d logs", Logger::dlog.back().log_id + 1);
+        }
         else
+        {
             ImGui::Text("no logs");
+        }
 
         ImGui::BeginChild("logger_list", ImVec2(800, 430), false, 0);
         {
