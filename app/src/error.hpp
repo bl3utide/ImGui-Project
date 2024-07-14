@@ -13,16 +13,16 @@ using ErrorWhen = std::uint8_t;
 using ErrorCause = std::uint8_t;
 
 // ERROR DEFINITIONS
-constexpr ErrorWhen     ERROR_WHEN_INIT         = 0x00;
-constexpr ErrorCause    ERROR_CAUSE_INIT_SDL    = 0x00;
-constexpr ErrorCause    ERROR_CAUSE_INIT_CONFIG = 0x01;
-constexpr ErrorCause    ERROR_CAUSE_INIT_GUI    = 0x02;
+const ErrorWhen     ERROR_WHEN_INIT             = 0x00;
+const ErrorCause    ERROR_CAUSE_INIT_SDL        = 0x00;
+const ErrorCause    ERROR_CAUSE_INIT_CONFIG     = 0x01;
+const ErrorCause    ERROR_CAUSE_INIT_GUI        = 0x02;
 
-constexpr ErrorWhen     ERROR_WHEN_STATE_PROCESS    = 0xF0;
-constexpr ErrorWhen     ERROR_WHEN_RESERVED_FUNC    = 0xF1;
+const ErrorWhen     ERROR_WHEN_STATE_PROCESS    = 0xF0;
+const ErrorWhen     ERROR_WHEN_RESERVED_FUNC    = 0xF1;
 
-constexpr ErrorWhen     ERROR_WHEN_UNDEFINED    = 0xFF;
-constexpr ErrorCause    ERROR_CAUSE_UNDEFINED   = 0xFF;
+const ErrorWhen     ERROR_WHEN_UNDEFINED        = 0xFF;
+const ErrorCause    ERROR_CAUSE_UNDEFINED       = 0xFF;
 
 class AnyCauseException final : public std::exception
 {
