@@ -175,7 +175,9 @@ void drawDebugTabItemLogger()
             }
 
             if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            {
                 ImGui::SetScrollHereY(1.0f);
+            }
         }
         ImGui::EndChild();
         if (ImGui::IsItemHovered())
@@ -273,7 +275,9 @@ void drawDebugWindows(int window_w, int window_h, State current_state)
     }
 
     if (show_debug_window_)
+    {
         drawDebugWindow(&show_debug_window_, window_w, window_h, current_state);
+    }
 
     ImGui::PopFont();
 }
