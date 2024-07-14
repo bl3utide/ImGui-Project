@@ -102,9 +102,9 @@ void drawDebugTabItemConfig()
     {
         ImGui::BeginChild("config_value_list", ImVec2(600, 300));
         {
-            auto drawParamsRow = [](const Config::Key key)
+            auto drawParamsRow = [](Config::Key key)
             {
-                const Config::Cv cv = Config::getCv(key);
+                const auto& cv = Config::getCv(key);
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
                 ImGui::Text("%s", cv.section_name().c_str());
