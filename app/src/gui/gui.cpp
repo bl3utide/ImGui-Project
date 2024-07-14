@@ -15,9 +15,9 @@ namespace Gui
 {
 
 // private
-const std::string APP_TITLE = DEF_APP_TITLE;
-const std::string APP_VERSION = DEF_APP_VERSION;
-const std::string APP_COPYRIGHT = StringUtil::format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
+std::string _app_title;
+std::string _app_version;
+std::string _app_copyright;
 SDL_Window* _window;
 SDL_GLContext _gl_context;
 const int WINDOW_WIDTH = 1024;
@@ -159,6 +159,10 @@ void postDraw()
 
 void initialize()
 {
+    _app_title = StringUtil::getExeVersionInfo(StringUtil::FileVersion::ProductName);
+    _app_version = StringUtil::getExeVersionInfo(StringUtil::FileVersion::ProductVersionMajorOnly);
+    _app_copyright = StringUtil::getExeVersionInfo(StringUtil::FileVersion::Copyright);
+
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -167,7 +171,7 @@ void initialize()
     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
-    _window = SDL_CreateWindow(APP_TITLE.c_str(),
+    _window = SDL_CreateWindow(_app_title.c_str(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL);
