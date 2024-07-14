@@ -23,8 +23,6 @@ enum class InitSection : int
     Sdl,
     Config,
     Gui,
-    Image,
-    Connector,
 
     _COUNT_,
 };

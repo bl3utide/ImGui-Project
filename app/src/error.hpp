@@ -15,8 +15,8 @@ using ErrorCause = std::uint8_t;
 // ERROR DEFINITIONS
 constexpr ErrorWhen     ERROR_WHEN_INIT         = 0x00;
 constexpr ErrorCause    ERROR_CAUSE_INIT_SDL    = 0x00;
-constexpr ErrorCause    ERROR_CAUSE_INIT_GUI    = 0x01;
-constexpr ErrorCause    ERROR_CAUSE_INIT_CONFIG = 0x04;
+constexpr ErrorCause    ERROR_CAUSE_INIT_CONFIG = 0x01;
+constexpr ErrorCause    ERROR_CAUSE_INIT_GUI    = 0x02;
 
 constexpr ErrorWhen     ERROR_WHEN_STATE_PROCESS    = 0xF0;
 constexpr ErrorWhen     ERROR_WHEN_RESERVED_FUNC    = 0xF1;
