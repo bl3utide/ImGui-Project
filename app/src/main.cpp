@@ -55,25 +55,7 @@ void loop()
 
         try
         {
-            switch (getState())
-            {
-                case State::InitInternalData:
-                    setNextState(State::ApplyConfig);
-                    break;
-                case State::ApplyConfig:
-                    Config::load();
-                    // TODO apply config data to all corresponding modules
-                    setNextState(State::Idle);
-                    break;
-                case State::Idle:
-                    break;
-                case State::PrepareToExit:
-                    // TODO update config data from all corresponding modules
-                    running = false;
-                    break;
-                default:
-                    break;
-            }
+            running = processForCurrentState();
         }
         catch (std::exception& error)
         {
