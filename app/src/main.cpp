@@ -95,23 +95,15 @@ int main(int, char**)
     try
     {
         ImGuiProject::initialize();
+        ImGuiProject::loop();
     }
-    catch (std::exception& e)
+    catch (std::runtime_error&)
     {
-#ifdef _DEBUG
-        LOGD << e.what();
-#endif
-        LERROR << e.what();
-        ImGuiProject::Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", e.what());
         ImGuiProject::finalize();
         exit(EXIT_FAILURE);
     }
 
-    ImGuiProject::loop();
     ImGuiProject::finalize();
 
-#ifdef _DEBUG
-    LOGD << "<end of application>";
-#endif
     return 0;
 }

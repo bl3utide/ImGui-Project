@@ -14,6 +14,9 @@ namespace ImGuiProject
 namespace Gui
 {
 
+// public
+std::vector<std::function<void()>> reservedFuncs;
+
 // private
 std::string _app_title;
 std::string _app_version;
@@ -247,6 +250,19 @@ void drawGui()
 void showMessageBox(Uint32 flags, const char* title, const char* message) noexcept
 {
     SDL_ShowSimpleMessageBox(flags, title, message, _window);
+}
+
+void doReservedFuncs()
+{
+    for (auto& func : reservedFuncs)
+    {
+        func();
+    }
+}
+
+void clearReservedFuncs() noexcept
+{
+    reservedFuncs.clear();
 }
 
 } // Gui
