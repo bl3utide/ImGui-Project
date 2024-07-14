@@ -128,7 +128,7 @@ void drawDebugTabItemConfig()
 
                 ImGui::TableHeadersRow();
 
-                for (int key_i = 0; key_i < static_cast<int>(Config::Key::_COUNT_); ++key_i)
+                for (auto key_i = 0; key_i < static_cast<int>(Config::Key::_COUNT_); ++key_i)
                 {
                     drawParamsRow(static_cast<Config::Key>(key_i));
                 }
