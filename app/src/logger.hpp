@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#ifdef _DEBUG
 // TODO change app namespace
 namespace ImGuiProject
 {
 namespace Logger
 {
 
-class Log
+#ifdef _DEBUG
+class DisplayFormattedDebugLog
 {
 public:
     int log_id;
@@ -17,10 +17,10 @@ public:
     std::string line;
     std::string text;
 
-    Log() : log_id(0), timestamp(""), category(""), function(""), line(""), text("")
+    DisplayFormattedDebugLog() : log_id(0), timestamp(""), category(""), function(""), line(""), text("")
     {}
 
-    Log(const std::string& message)
+    DisplayFormattedDebugLog(const std::string& message)
         : log_id(0), timestamp(""), category(""), function(""), line(""), text("")
     {
         std::regex re("^(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}) (\\S+) \\[([^@]+)@(\\d+)\\] (.+)$");
@@ -42,12 +42,14 @@ private:
     static int _next_log_id;
 };
 
-extern std::list<Log> logs;
+extern std::list<DisplayFormattedDebugLog> logs;
 extern const size_t MAX_DISPLAY_LOGS;
+#endif
+
+void initialize() noexcept;
 
 } // Logger
 } // ImGuiApp
-#endif
 
 namespace plog
 {
@@ -61,7 +63,7 @@ public:
     {
         namespace AppLogger = ImGuiProject::Logger;
         std::string str = Formatter::format(record);
-        AppLogger::logs.emplace_front(AppLogger::Log(str));
+        AppLogger::logs.emplace_front(AppLogger::DisplayFormattedDebugLog(str));
         if (AppLogger::logs.size() > AppLogger::MAX_DISPLAY_LOGS)
             AppLogger::logs.resize(AppLogger::MAX_DISPLAY_LOGS);
     }

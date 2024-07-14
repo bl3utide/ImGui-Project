@@ -1,4 +1,13 @@
-﻿#include "common.hpp"
+﻿/*
+    ImGui Project
+    0.3.0
+*/
+/*
+    (Project Name)
+    Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
+    1.0.0
+*/
+#include "common.hpp"
 #include "error.hpp"
 #include "main.hpp"
 #include "state.hpp"
@@ -10,31 +19,22 @@
 namespace ImGuiProject
 {
 
-// private
-const std::string APP_NAME = DEF_APP_NAME;
-const std::string APP_VERSION = DEF_APP_VERSION;
-const std::string APP_COPYRIGHT = StringUtil::format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
-const std::string APP_TITLE = DEF_APP_TITLE;
-const std::string CONFIG_FILE_NAME = StringUtil::format("%s.ini", APP_NAME.c_str());
-#ifdef _DEBUG
-const std::string DEBUG_FILE_NAME = StringUtil::format("%s.debug.log", APP_NAME.c_str());
-#endif
-const std::string ERROR_FILE_NAME = StringUtil::format("%s.error.log", APP_NAME.c_str());
-
 void initialize()
 {
+    Logger::initialize();
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
     {
         throw std::runtime_error("SDL_Init error");
     }
 
-    Gui::initialize(APP_TITLE, APP_VERSION, APP_COPYRIGHT);
+    Gui::initialize();
     Config::initialize();
 }
 
 void finalize() noexcept
 {
-    Config::save(CONFIG_FILE_NAME);
+    Config::save();
     Gui::finalize();
 
     SDL_Quit();
@@ -62,7 +62,7 @@ void loop()
                     setNextState(State::ApplyConfig);
                     break;
                 case State::ApplyConfig:
-                    Config::load(CONFIG_FILE_NAME);
+                    Config::load();
                     // TODO apply config data to all corresponding modules
                     setNextState(State::Idle);
                     break;
@@ -111,18 +111,6 @@ void loop()
 
 int main(int, char**)
 {
-    enum LogId
-    {
-        Error = 1,
-    };
-
-#ifdef _DEBUG
-    static plog::DebugLogAppender<plog::DebugLogFormatter> debugLogAppender;
-    plog::init<plog::DebugLogFormatter>(plog::debug, ImGuiProject::DEBUG_FILE_NAME.c_str()).addAppender(&debugLogAppender);
-    LOGD << "<beginning of application>";
-#endif
-    plog::init<plog::ErrorLogFormatter, LogId::Error>(plog::error, ImGuiProject::ERROR_FILE_NAME.c_str());
-#define LERROR LOGE_(1)
     try
     {
         ImGuiProject::initialize();
