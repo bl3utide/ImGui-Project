@@ -57,6 +57,7 @@ extern std::mutex dlog_mutex;
 
 void initialize() noexcept;
 void error(const UncontinuableException& uce) noexcept;
+void debug(const ContinuableException& ce) noexcept;
 void debug(const char* message) noexcept;
 
 } // Logger

@@ -22,14 +22,42 @@ void initialize()
 {
     Logger::initialize();
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
-    {
-        throw std::runtime_error("SDL_Init error");
-    }
     Logger::debug("<beginning of application>");
 
-    Gui::initialize();
-    Config::initialize();
+    try
+    {
+        Logger::debug("start init SDL");
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
+        {
+            throw UncontinuableException("SDL_Init error", ERROR_WHEN_INIT, ERROR_CAUSE_INIT_SDL);
+        }
+
+        try
+        {
+            Logger::debug("start init GUI");
+            Gui::initialize();
+        }
+        catch (std::exception& e)
+        {
+            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_GUI);
+        }
+
+        try
+        {
+            Logger::debug("start init Config");
+            Config::initialize();
+        }
+        catch (std::exception& e)
+        {
+            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_CONFIG);
+        }
+    }
+    catch (UncontinuableException& uce)
+    {
+        Logger::error(uce);
+        Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", uce.getErrorMessage().c_str());
+        throw std::runtime_error("");
+    }
 }
 
 void finalize() noexcept
@@ -49,6 +77,7 @@ void loop()
 
     while (running)
     {
+        // pick up all SDL events that occured in this loop
         while (SDL_PollEvent(&event))
         {
             ImGui_ImplSDL2_ProcessEvent(&event);
@@ -56,16 +85,29 @@ void loop()
                 setNextState(State::PrepareToExit);
         }
 
+        // processing branches depending on current state
         try
         {
             running = processForCurrentState();
         }
+        catch (ContinuableException& ce)
+        {
+            Logger::debug(ce);
+            setAppError(ce.getErrorMessage().c_str());
+            setNextState(ce.getNextState());
+        }
+        catch (UncontinuableException& uce)
+        {
+            Logger::error(uce);
+            Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", uce.getErrorMessage().c_str());
+            throw std::runtime_error("");
+        }
         catch (std::exception& error)
         {
-#ifdef _DEBUG
-            LOGD << error.what();
-#endif
-            setAppError(StringUtil::format("General error: %s", error.what()));
+            UncontinuableException uce(error.what(), ERROR_WHEN_STATE_PROCESS);
+            Logger::error(uce);
+            Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error by unexpected cause");
+            throw std::runtime_error("");
         }
 
         // check if state changes in the next loop
@@ -84,7 +126,7 @@ void loop()
             }
             catch (std::exception& error)
             {
-                UncontinuableException uce(error.what(), ERROR_WHEN_RESFUNC_ANY);
+                UncontinuableException uce(error.what(), ERROR_WHEN_RESRVED_FUNC);
                 Logger::error(uce);
                 Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error by unexpected cause");
                 throw std::runtime_error("");
