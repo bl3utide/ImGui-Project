@@ -21,7 +21,7 @@ SDL_GLContext gl_context_;
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
-void setUiStyle() noexcept
+static void setUiStyle() noexcept
 {
     auto style = &ImGui::GetStyle();
     /* TODO set app-specific UI styles
@@ -84,7 +84,7 @@ void setUiStyle() noexcept
     */
 }
 
-void drawErrorModal()
+static void drawErrorModal()
 {
     if (has_error)
     {
@@ -130,14 +130,14 @@ void drawErrorModal()
     }
 }
 
-void preDraw()
+static void preDraw()
 {
     ImGui_ImplOpenGL2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 }
 
-void postDraw()
+static void postDraw()
 {
     ImGui::Render();
     glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
