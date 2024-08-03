@@ -10,3 +10,6 @@
 [submodule "deps/imgui"]
 	path = deps/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "deps/plog"]
+	path = deps/plog
+	url = https://github.com/SergiusTheBest/plog
