@@ -65,7 +65,7 @@
       <ConformanceMode>false</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;$(SolutionDir)deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>common.hpp</PrecompiledHeaderFile>
     </ClCompile>
@@ -87,7 +87,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;$(SolutionDir)deps\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>common.hpp</PrecompiledHeaderFile>
     </ClCompile>
