@@ -65,12 +65,12 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "041104b0"
+        BLOCK "040004b0"
         BEGIN
             VALUE "CompanyName", "TODO: <CompanyName>"
             VALUE "FileDescription", "TODO: <Description>"
             VALUE "FileVersion", "1.0.0.0"
-            VALUE "InternalName", "TODO: <SolutionName>.exe"
+            VALUE "InternalName", "TODO: <SolutionName>"
             VALUE "LegalCopyright", "Copyright (C) 2024"
             VALUE "OriginalFilename", "TODO: <SolutionName>.exe"
             VALUE "ProductName", "TODO: <Product Name>"
@@ -79,7 +79,7 @@ BEGIN
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x411, 1200
+        VALUE "Translation", 0x400, 1200
     END
 END
 

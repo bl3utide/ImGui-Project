@@ -1,103 +1,166 @@
-﻿#include "common.hpp"
+﻿/*
+    ImGui Project
+    0.3.1
+*/
+/*
+    (Project Name)
+    Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
+    1.0.0
+*/
+#include "common.hpp"
 #include "error.hpp"
-#include "main.hpp"
 #include "state.hpp"
 #include "config/config.hpp"
 #include "gui/gui.hpp"
-#ifdef _DEBUG
 #include "logger.hpp"
-#endif
 
 // TODO change app namespace
 namespace ImGuiProject
 {
 
+enum class InitSection : int
+{
+    Sdl,
+    Config,
+    Gui,
+
+    _COUNT_,
+};
+
 // private
-const std::string APP_NAME = DEF_APP_NAME;
-const std::string APP_VERSION = DEF_APP_VERSION;
-const std::string APP_COPYRIGHT = StringUtil::format("Copyright (C) %d %s", DEF_APP_DEV_YR, DEF_APP_DEV_BY);
-const std::string APP_TITLE = DEF_APP_TITLE;
-const std::string CONFIG_FILE_NAME = StringUtil::format("%s.ini", APP_NAME.c_str());
-#ifdef _DEBUG
-const std::string DEBUG_FILE_NAME = StringUtil::format("%s.debug.log", APP_NAME.c_str());
-#endif
+std::bitset<static_cast<int>(InitSection::_COUNT_)> init_flag_;
 
-void initialize()
+static void initialize()
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
+    Logger::initialize();
+    Logger::debug("<beginning of application>");
+
+    initError();
+    initState();
+
+    try
     {
-        throw std::runtime_error("SDL_Init error");
-    }
-
-    Gui::initialize(APP_TITLE, APP_VERSION, APP_COPYRIGHT);
-    Config::initialize();
-}
-
-void finalize() noexcept
-{
-    Config::save(CONFIG_FILE_NAME);
-    Gui::finalize();
-
-    SDL_Quit();
-}
-
-void loop()
-{
-    SDL_Event event;
-    bool running = true;
-
-    while (running)
-    {
-        while (SDL_PollEvent(&event))
+        Logger::debug("start init SDL");
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
         {
-            ImGui_ImplSDL2_ProcessEvent(&event);
-            if (event.type == SDL_QUIT)
-                setNextState(State::PrepareToExit);
+            throw UncontinuableException("SDL_Init error", ERROR_WHEN_INIT, ERROR_CAUSE_INIT_SDL);
+        }
+        init_flag_.set(static_cast<int>(InitSection::Sdl));
+
+        try
+        {
+            Logger::debug("start init Config");
+            Config::initialize();
+            init_flag_.set(static_cast<int>(InitSection::Config));
+        }
+        catch (std::exception& e)
+        {
+            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_CONFIG);
         }
 
         try
         {
-            switch (getState())
+            Logger::debug("start init GUI");
+            Gui::initialize();
+            init_flag_.set(static_cast<int>(InitSection::Gui));
+        }
+        catch (std::exception& e)
+        {
+            throw UncontinuableException(e.what(), ERROR_WHEN_INIT, ERROR_CAUSE_INIT_GUI);
+        }
+    }
+    catch (UncontinuableException& uce)
+    {
+        Logger::error(uce);
+        Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", uce.getErrorMessage().c_str());
+        throw std::runtime_error("");
+    }
+}
+
+static void finalize() noexcept
+{
+    if (init_flag_[static_cast<int>(InitSection::Config)])
+    {
+        Config::save();
+    }
+
+    if (init_flag_[static_cast<int>(InitSection::Gui)])
+    {
+        Gui::finalize();
+    }
+
+    if (init_flag_[static_cast<int>(InitSection::Sdl)])
+    {
+        SDL_Quit();
+    }
+
+    Logger::debug("<end of application>");
+}
+
+static void loop()
+{
+    SDL_Event event;
+    auto running = true;
+
+    while (running)
+    {
+        // pick up all SDL events that occured in this loop
+        while (SDL_PollEvent(&event))
+        {
+            ImGui_ImplSDL2_ProcessEvent(&event);
+            if (event.type == SDL_QUIT)
             {
-                case State::InitInternalData:
-                    setNextState(State::ApplyConfig);
-                    break;
-                case State::ApplyConfig:
-                    Config::load(CONFIG_FILE_NAME);
-                    // TODO apply config data to all corresponding modules
-                    setNextState(State::Idle);
-                    break;
-                case State::Idle:
-                    break;
-                case State::PrepareToExit:
-                    // TODO update config data from all corresponding modules
-                    running = false;
-                    break;
-                default:
-                    break;
+                setNextState(State::PrepareToExit);
             }
+        }
+
+        // processing branches depending on current state
+        try
+        {
+            running = processForCurrentState();
+        }
+        catch (ContinuableException& ce)
+        {
+            Logger::debug(ce);
+            setAppError(ce.getErrorMessage().c_str());
+            setNextState(ce.getNextState());
+        }
+        catch (UncontinuableException& uce)
+        {
+            Logger::error(uce);
+            Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", uce.getErrorMessage().c_str());
+            throw std::runtime_error("");
         }
         catch (std::exception& error)
         {
-#ifdef _DEBUG
-            LOGD << error.what();
-#endif
-            setAppError(StringUtil::format("General error: %s", error.what()));
+            UncontinuableException uce(error.what(), ERROR_WHEN_STATE_PROCESS);
+            Logger::error(uce);
+            Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error by unexpected cause");
+            throw std::runtime_error("");
         }
 
+        // check if state changes in the next loop
         if (getNextState() == State::None)
         {
+            Gui::drawGui();
             try
             {
-                Gui::drawGui();
+                Gui::doReservedFuncs();
+            }
+            catch (ContinuableException& ce)
+            {
+                Logger::debug(ce.what());
+                setAppError(ce.getErrorMessage().c_str());
+                setNextState(ce.getNextState());
             }
             catch (std::exception& error)
             {
-#ifdef _DEBUG
-                LOGD << error.what();
-#endif
-                setAppError(StringUtil::format("Gui error: %s", error.what()));
+                UncontinuableException uce(error.what(), ERROR_WHEN_RESERVED_FUNC);
+                Logger::error(uce);
+                Gui::showMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error by unexpected cause");
+                throw std::runtime_error("");
             }
+            Gui::clearReservedFuncs();
         }
         else
         {
@@ -112,32 +175,18 @@ void loop()
 
 int main(int, char**)
 {
-#ifdef _DEBUG
-    static plog::DebugLogAppender<plog::LogFormatter> debugLogAppender;
-    plog::init<plog::LogFormatter>(plog::debug, ImGuiProject::DEBUG_FILE_NAME.c_str()).addAppender(&debugLogAppender);
-    LOGD << "<beginning of application>";
-#endif
     try
     {
         ImGuiProject::initialize();
+        ImGuiProject::loop();
     }
-    catch (std::exception& e)
+    catch (std::runtime_error&)
     {
-#ifdef _DEBUG
-        LOGD << e.what();
-#endif
-        printf("%s", e.what());
         ImGuiProject::finalize();
         exit(EXIT_FAILURE);
     }
 
-    ImGuiProject::loop();
-
-    // TODO try-catch
     ImGuiProject::finalize();
 
-#ifdef _DEBUG
-    LOGD << "<end of application>";
-#endif
     return 0;
 }

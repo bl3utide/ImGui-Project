@@ -1,13 +1,7 @@
 ﻿#include "common.hpp"
 #include "error.hpp"
-#include "compressed/arrayed_font.hpp"
 #include "gui/gui.hpp"
-#include "gui/gui_color.hpp"
 #include "gui/gui_font.hpp"
-#include "gui/gui_util.hpp"
-#ifdef _DEBUG
-#include "logger.hpp"
-#endif
 
 // TODO change app namespace
 namespace ImGuiProject
@@ -15,18 +9,21 @@ namespace ImGuiProject
 namespace Gui
 {
 
+// public
+std::vector<std::function<void()>> reserved_funcs;
+
 // private
-std::string _app_title;
-std::string _app_version;
-std::string _app_copyright;
-SDL_Window* _window;
-SDL_GLContext _gl_context;
+std::string app_title_;
+std::string app_version_;
+std::string app_copyright_;
+SDL_Window* window_;
+SDL_GLContext gl_context_;
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
-void setUiStyle() noexcept
+static void setUiStyle() noexcept
 {
-    ImGuiStyle* style = &ImGui::GetStyle();
+    auto style = &ImGui::GetStyle();
     /* TODO set app-specific UI styles
     style->WindowPadding = ImVec2(6.0f, 6.0f);
     style->WindowRounding = 0.0f;
@@ -87,7 +84,7 @@ void setUiStyle() noexcept
     */
 }
 
-void drawErrorModal()
+static void drawErrorModal()
 {
     if (has_error)
     {
@@ -97,7 +94,7 @@ void drawErrorModal()
             showing_error_message = true;
         }
 
-        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        const auto center = ImGui::GetMainViewport()->GetCenter();
         ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 
         if (ImGui::BeginPopupModal("app_error", &showing_error_message,
@@ -105,14 +102,14 @@ void drawErrorModal()
             | ImGuiWindowFlags_NoMove
             | ImGuiWindowFlags_NoTitleBar))
         {
-            ImGui::PushFont((int)Font::OptionItemBold);
+            GuiUtil::PushFont((int)Font::OptionItemBold);
             ImGui::Text("Application error");
             ImGui::PopFont();
             ImGui::Separator();
 
             ImGui::Dummy(ImVec2(400.0f, 10.0f));
 
-            ImGui::PushFont((int)Font::OptionItem);
+            GuiUtil::PushFont((int)Font::OptionItem);
             ImGui::TextWrapped(error_message.c_str());
 
             ImGui::Dummy(ImVec2(400.0f, 10.0f));
@@ -124,7 +121,7 @@ void drawErrorModal()
                 showing_error_message = false;
                 ImGui::CloseCurrentPopup();
             }
-            ImGui::MouseCursorToHand();
+            GuiUtil::MouseCursorToHand();
             ImGui::PopStyleVar();
             ImGui::PopFont();
 
@@ -133,14 +130,14 @@ void drawErrorModal()
     }
 }
 
-void preDraw()
+static void preDraw()
 {
     ImGui_ImplOpenGL2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 }
 
-void postDraw()
+static void postDraw()
 {
     ImGui::Render();
     glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
@@ -155,14 +152,14 @@ void postDraw()
         ImGui::RenderPlatformWindowsDefault();
         SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
     }
-    SDL_GL_SwapWindow(_window);
+    SDL_GL_SwapWindow(window_);
 }
 
-void initialize(const std::string& title, const std::string& version, const std::string& copyright)
+void initialize()
 {
-    _app_title = title;
-    _app_version = version;
-    _app_copyright = copyright;
+    app_title_ = StringUtil::getExeVersionInfo(StringUtil::FileVersion::ProductName);
+    app_version_ = StringUtil::getExeVersionInfo(StringUtil::FileVersion::ProductVersionMajorOnly);
+    app_copyright_ = StringUtil::getExeVersionInfo(StringUtil::FileVersion::Copyright);
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -172,14 +169,14 @@ void initialize(const std::string& title, const std::string& version, const std:
     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
     SDL_DisplayMode current;
     SDL_GetCurrentDisplayMode(0, &current);
-    _window = SDL_CreateWindow(_app_title.c_str(),
+    window_ = SDL_CreateWindow(app_title_.c_str(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL);
-    SDL_SetWindowMaximumSize(_window, WINDOW_WIDTH, WINDOW_HEIGHT);
-    SDL_SetWindowMinimumSize(_window, WINDOW_WIDTH, WINDOW_HEIGHT);
-    _gl_context = SDL_GL_CreateContext(_window);
-    SDL_GL_MakeCurrent(_window, _gl_context);
+    SDL_SetWindowMaximumSize(window_, WINDOW_WIDTH, WINDOW_HEIGHT);
+    SDL_SetWindowMinimumSize(window_, WINDOW_WIDTH, WINDOW_HEIGHT);
+    gl_context_ = SDL_GL_CreateContext(window_);
+    SDL_GL_MakeCurrent(window_, gl_context_);
     SDL_GL_SetSwapInterval(1);  // Enable vsync
 
     IMGUI_CHECKVERSION();
@@ -189,11 +186,11 @@ void initialize(const std::string& title, const std::string& version, const std:
 
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
     io.ConfigViewportsNoAutoMerge = false;
-    io.ConfigViewportsNoDecoration = false;
+    io.ConfigViewportsNoDecoration = true;
     io.ConfigViewportsNoDefaultParent = false;
     io.ConfigViewportsNoTaskBarIcon = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(_window, _gl_context);
+    ImGui_ImplSDL2_InitForOpenGL(window_, gl_context_);
     ImGui_ImplOpenGL2_Init();
 
     addAllFonts();
@@ -208,20 +205,20 @@ void finalize() noexcept
     ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
-    SDL_GL_DeleteContext(_gl_context);
-    SDL_DestroyWindow(_window);
+    SDL_GL_DeleteContext(gl_context_);
+    SDL_DestroyWindow(window_);
 }
 
 void drawGui()
 {
-    State current_state = getState();
+    const auto current_state = getState();
 
     preDraw();
 
     drawErrorModal();
 
     int window_width, window_height;
-    SDL_GetWindowSize(_window, &window_width, &window_height);
+    SDL_GetWindowSize(window_, &window_width, &window_height);
 
     auto vp_pos = ImGui::GetWindowViewport()->WorkPos;
     ImGui::SetNextWindowPos(vp_pos);
@@ -243,6 +240,24 @@ void drawGui()
 #endif
 
     postDraw();
+}
+
+void showMessageBox(Uint32 flags, const char* title, const char* message) noexcept
+{
+    SDL_ShowSimpleMessageBox(flags, title, message, window_);
+}
+
+void doReservedFuncs()
+{
+    for (auto& func : reserved_funcs)
+    {
+        func();
+    }
+}
+
+void clearReservedFuncs() noexcept
+{
+    reserved_funcs.clear();
 }
 
 } // Gui

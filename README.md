@@ -9,6 +9,11 @@ C++ Project template using SDL2 and ImGui in Visual Studio
 
 ## Changelog
 
+### v0.3.1
+- 全体的な動作の安定性を強化
+- ログ機能を強化
+- 外部ライブラリをサブモジュールとして直接取り込むように変更
+
 ### v0.3.0
 - パラメータを設定ファイル(.ini)に保存する機能を追加
 

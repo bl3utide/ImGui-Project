@@ -4,9 +4,7 @@
 #include "config/config.hpp"
 #include "config/cv.hpp"
 #include "config/section.hpp"
-#include "gui/gui.hpp"
 #include "gui/gui_font.hpp"
-#include "gui/gui_util.hpp"
 #include "logger.hpp"
 
 // TODO change app namespace
@@ -18,15 +16,13 @@ namespace Debug
 {
 
 // private
-bool _show_debug_menu_bar = true;
-bool _show_demo_window = false;
-bool _show_debug_window = false;
-int _selected_debug_log_index = -1;
-Logger::Log _selected_debug_log;
+bool show_debug_menu_bar_ = true;
+bool show_demo_window_ = false;
+bool show_debug_window_ = true;
 
-void drawDebugMenuBar(const ImVec2 viewport_pos)
+void drawDebugMenuBar(const ImVec2& viewport_pos)
 {
-    ImGui::PushFont((int)FontDebug::Text);
+    GuiUtil::PushFont((int)FontDebug::Text);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.35f, 0.35f, 0.35f, 0.65f));
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(ImVec2(center.x - 140.0f, viewport_pos.y), ImGuiCond_Always);
@@ -36,24 +32,24 @@ void drawDebugMenuBar(const ImVec2 viewport_pos)
         | ImGuiWindowFlags_NoTitleBar);
     {
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(12.0f, 3.0f));
-        if (_show_debug_menu_bar)
+        if (show_debug_menu_bar_)
         {
-            if (ImGui::Button("_")) _show_debug_menu_bar = false;
+            if (ImGui::Button("_")) show_debug_menu_bar_ = false;
         }
         else
         {
-            if (ImGui::Button(">")) _show_debug_menu_bar = true;
+            if (ImGui::Button(">")) show_debug_menu_bar_ = true;
         }
-        ImGui::MouseCursorToHand();
+        GuiUtil::MouseCursorToHand();
         ImGui::PopStyleVar();
 
-        if (_show_debug_menu_bar)
+        if (show_debug_menu_bar_)
         {
-            ImGui::Checkbox("demo", &_show_demo_window);
-            ImGui::MouseCursorToHand();
+            ImGui::Checkbox("demo", &show_demo_window_);
+            GuiUtil::MouseCursorToHand();
             ImGui::SameLine();
-            ImGui::Checkbox("debug", &_show_debug_window);
-            ImGui::MouseCursorToHand();
+            ImGui::Checkbox("debug", &show_debug_window_);
+            GuiUtil::MouseCursorToHand();
         }
     }
     ImGui::End();
@@ -61,7 +57,7 @@ void drawDebugMenuBar(const ImVec2 viewport_pos)
     ImGui::PopFont();
 }
 
-void pushDebugStyles() noexcept
+static void pushDebugStyles() noexcept
 {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1.0f);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.08f, 0.08f, 0.08f, 1.0f));
@@ -70,9 +66,9 @@ void pushDebugStyles() noexcept
     ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.034f, 0.035f, 0.086f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.034f, 0.035f, 0.086f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_TitleBgCollapsed, ImVec4(0.034f, 0.035f, 0.086f, 1.0f));
-    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.111f, 0.178f, 0.301f, 1.0f));
-    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.069f, 0.111f, 0.188f, 1.0f));
-    ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.069f, 0.111f, 0.188f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.111f, 0.178f, 0.301f, 0.5f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.111f, 0.178f, 0.301f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.111f, 0.178f, 0.301f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_Tab, ImVec4(0.09f, 0.09f, 0.12f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_TabActive, ImVec4(0.24f, 0.24f, 0.28f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_TabHovered, ImVec4(0.24f, 0.24f, 0.28f, 1.0f));
@@ -83,13 +79,13 @@ void pushDebugStyles() noexcept
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.965f, 0.965f, 0.965f, 1.0f));
 }
 
-void popDebugStyles() noexcept
+static void popDebugStyles() noexcept
 {
     ImGui::PopStyleColor(17);
     ImGui::PopStyleVar();
 }
 
-void drawDebugTabItemGeneral()
+static void drawDebugTabItemGeneral()
 {
     if (ImGui::BeginTabItem("General"))
     {
@@ -99,15 +95,15 @@ void drawDebugTabItemGeneral()
     }
 }
 
-void drawDebugTabItemConfig()
+static void drawDebugTabItemConfig()
 {
     if (ImGui::BeginTabItem("Config"))
     {
         ImGui::BeginChild("config_value_list", ImVec2(600, 300));
         {
-            auto drawParamsRow = [](const Config::Key key)
+            auto drawParamsRow = [](Config::Key key)
             {
-                const Config::Cv cv = Config::getCv(key);
+                const auto& cv = Config::getCv(key);
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
                 ImGui::Text("%s", cv.section_name().c_str());
@@ -131,7 +127,7 @@ void drawDebugTabItemConfig()
 
                 ImGui::TableHeadersRow();
 
-                for (int key_i = 0; key_i < static_cast<int>(Config::Key::_COUNT_); ++key_i)
+                for (auto key_i = 0; key_i < static_cast<int>(Config::Key::_COUNT_); ++key_i)
                 {
                     drawParamsRow(static_cast<Config::Key>(key_i));
                 }
@@ -145,41 +141,74 @@ void drawDebugTabItemConfig()
     }
 }
 
-void drawDebugTabItemLogger()
+static void drawDebugTabItemLogger()
 {
     if (ImGui::BeginTabItem("Logger"))
     {
-        ImGui::Text("%d logs", Logger::logs.size());
+        std::unique_lock lock(Logger::dlog_mutex);
+
+        if (Logger::dlog.size() > 0)
+        {
+            ImGui::Text("%d logs", Logger::dlog.back().log_id + 1);
+        }
+        else
+        {
+            ImGui::Text("no logs");
+        }
 
         ImGui::BeginChild("logger_list", ImVec2(800, 430), false, 0);
         {
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8.0f, 0.0f));
-            auto debug_log = Logger::logs;
-            for (auto iter = debug_log.begin(); iter != debug_log.end(); ++iter)
+            int selected_index = 0;
+            std::vector<Logger::DisplayFormattedDebugLog> dlog_copy = Logger::dlog;
+            auto dlog_copy_end = dlog_copy.cend();
+            for (auto iter = dlog_copy.cbegin(); iter != dlog_copy_end; ++iter)
             {
-                bool is_selected = _selected_debug_log_index == iter->log_id;
-                if (ImGui::Selectable(StringUtil::format("%05d %s", iter->log_id, iter->text.c_str()).c_str(), is_selected))
+                const bool is_selected = selected_index == Logger::dlog_selected_index;
+                if (ImGui::Selectable(std::format("{0:05d} {1}", iter->log_id, iter->text).c_str(), is_selected))
                 {
-                    _selected_debug_log = *iter;
-                    _selected_debug_log_index = iter->log_id;
+                    Logger::dlog_selected_index = selected_index;
+                    Logger::dlog_selected = *iter;
                 }
-                ImGui::MouseCursorToHand();
+                GuiUtil::MouseCursorToHand();
+                ++selected_index;
             }
 
-            ImGui::PopStyleVar();
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            {
+                ImGui::SetScrollHereY(1.0f);
+            }
         }
         ImGui::EndChild();
+        if (ImGui::IsItemHovered())
+        {
+            auto f = []()
+            {
+                auto idx = Logger::dlog_selected_index;
+                Logger::dlog_selected = Logger::DisplayFormattedDebugLog(Logger::dlog[idx]);
+            };
+
+            if (GuiUtil::IsCustomKeyPressed(GuiUtil::ImGuiCustomKey::Up, true) && Logger::dlog_selected_index > 0)
+            {
+                --Logger::dlog_selected_index;
+                f();
+            }
+            else if (GuiUtil::IsCustomKeyPressed(GuiUtil::ImGuiCustomKey::Down, true) && Logger::dlog_selected_index < Logger::dlog.size() - 1)
+            {
+                ++Logger::dlog_selected_index;
+                f();
+            }
+        }
 
         ImGui::Separator();
 
-        if (_selected_debug_log_index != -1)
+        if (Logger::dlog_selected_index != -1)
         {
             ImGui::BeginChild("logger_detail", ImVec2(800, 70), false, 0);
             {
-                ImGui::Text("Log ID %d [%s]", _selected_debug_log.log_id, _selected_debug_log.category.c_str());
-                ImGui::Text("%s", _selected_debug_log.timestamp.c_str());
-                ImGui::Text("%s (LINE %s)", _selected_debug_log.function.c_str(), _selected_debug_log.line.c_str());
-                ImGui::Text("%s", _selected_debug_log.text.c_str());
+                ImGui::Text("Log ID %d [%s]", Logger::dlog_selected.log_id, Logger::dlog_selected.category.c_str());
+                ImGui::Text("%s", Logger::dlog_selected.timestamp.c_str());
+                ImGui::Text("%s (LINE %s)", Logger::dlog_selected.function.c_str(), Logger::dlog_selected.line.c_str());
+                ImGui::Text("%s", Logger::dlog_selected.text.c_str());
             }
             ImGui::EndChild();
         }
@@ -188,11 +217,11 @@ void drawDebugTabItemLogger()
     }
 }
 
-void drawDebugWindow(bool* open, const int window_w, const int window_h,
-    const State current_state)
+static void drawDebugWindow(bool* open, int window_w, int window_h, State current_state)
 {
     pushDebugStyles();
 
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
     ImGui::Begin("debug", open,
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize |
         ImGuiWindowFlags_NoTitleBar);
@@ -209,7 +238,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
             && static_cast<int>(current_state) <= static_cast<int>(State::None))
         {
             ImGui::Text("%-24s: [%d]%s", "state",
-                current_state, STATE_STR[static_cast<int>(current_state)]);
+                current_state, STATE_STR.at(current_state));
         }
 
         State next_state = getNextState();
@@ -217,7 +246,7 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
             && static_cast<int>(next_state) <= static_cast<int>(State::None))
         {
             ImGui::Text("%-24s: [%d]%s", "next state",
-                next_state, STATE_STR[static_cast<int>(next_state)]);
+                next_state, STATE_STR.at(next_state));
         }
 
         if (ImGui::BeginTabBar("DebugTab", ImGuiTabBarFlags_None))
@@ -233,19 +262,21 @@ void drawDebugWindow(bool* open, const int window_w, const int window_h,
     popDebugStyles();
 }
 
-void drawDebugWindows(const int window_w, const int window_h, const State current_state)
+void drawDebugWindows(int window_w, int window_h, State current_state)
 {
-    ImGui::PushFont((int)FontDebug::Text);
+    GuiUtil::PushFont((int)FontDebug::Text);
 
-    if (_show_demo_window)
+    if (show_demo_window_)
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1.0f);
-        ImGui::ShowDemoWindow(&_show_demo_window);
+        ImGui::ShowDemoWindow(&show_demo_window_);
         ImGui::PopStyleVar();
     }
 
-    if (_show_debug_window)
-        drawDebugWindow(&_show_debug_window, window_w, window_h, current_state);
+    if (show_debug_window_)
+    {
+        drawDebugWindow(&show_debug_window_, window_w, window_h, current_state);
+    }
 
     ImGui::PopFont();
 }
