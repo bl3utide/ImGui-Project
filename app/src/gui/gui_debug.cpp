@@ -25,7 +25,7 @@ void drawDebugMenuBar(const ImVec2& viewport_pos)
     GuiUtil::PushFont((int)FontDebug::Text);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.35f, 0.35f, 0.35f, 0.65f));
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-    ImGui::SetNextWindowPos(ImVec2(center.x - 140.0f, viewport_pos.y), ImGuiCond_Always);
+    ImGui::SetNextWindowPos(ImVec2(center.x - 80.0f, viewport_pos.y), ImGuiCond_Always);
     ImGui::Begin("debug_control", nullptr,
         ImGuiWindowFlags_AlwaysAutoResize
         | ImGuiWindowFlags_NoMove
