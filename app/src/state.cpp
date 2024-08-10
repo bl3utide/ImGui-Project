@@ -17,7 +17,7 @@ const std::unordered_map<State, const char*> STATE_STR
     { State::ApplyConfig,       "ApplyConfig" },
     { State::Idle,              "Idle" },
     { State::PrepareToExit,     "PrepareToExit" },
-    { State::None,              "None"},
+    { State::None,              "None" },
 };
 #endif
 
