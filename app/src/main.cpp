@@ -1,8 +1,16 @@
 ﻿/*
+    TODO: (resource) CompanyName
+    TODO: (resource) FileDescription
+    TODO: (resource) InternalName
+    TODO: (resource) OriginalFilename
+    TODO: (resource) ProductName
+    TODO: remove this comment area
     ImGui Project
     0.3.1
 */
 /*
+    TODO: Project Name
+    TODO: Project Year
     (Project Name)
     Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
     1.0.0
