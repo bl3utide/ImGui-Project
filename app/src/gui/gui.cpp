@@ -1,7 +1,7 @@
-﻿#include "common.hpp"
-#include "error.hpp"
-#include "gui/gui.hpp"
-#include "gui/gui_font.hpp"
+﻿#include "common.h"
+#include "error.h"
+#include "gui/gui.h"
+#include "gui/gui_font.h"
 
 // TODO change app namespace
 namespace ImGuiProject

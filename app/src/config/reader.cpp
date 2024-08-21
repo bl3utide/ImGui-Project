@@ -1,6 +1,6 @@
-﻿#include "common.hpp"
-#include "logger.hpp"
-#include "config/cv.hpp"
+﻿#include "common.h"
+#include "logger.h"
+#include "config/cv.h"
 
 // TODO change app namespace
 namespace ImGuiProject

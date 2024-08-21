@@ -15,12 +15,12 @@
     Copyright (C) 20xx bl3utide <bl3utide@gmail.com>
     1.0.0
 */
-#include "common.hpp"
-#include "error.hpp"
-#include "state.hpp"
-#include "config/config.hpp"
-#include "gui/gui.hpp"
-#include "logger.hpp"
+#include "common.h"
+#include "error.h"
+#include "state.h"
+#include "config/config.h"
+#include "gui/gui.h"
+#include "logger.h"
 
 // TODO change app namespace
 namespace ImGuiProject

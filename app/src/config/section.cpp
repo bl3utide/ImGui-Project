@@ -1,5 +1,5 @@
-﻿#include "common.hpp"
-#include "config/section.hpp"
+﻿#include "common.h"
+#include "config/section.h"
 
 // TODO change app namespace
 namespace ImGuiProject

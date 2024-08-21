@@ -1,9 +1,9 @@
-﻿#include "common.hpp"
-#include "logger.hpp"
-#include "config/config.hpp"
-#include "config/cv.hpp"
-#include "config/reader.hpp"
-#include "config/writer.hpp"
+﻿#include "common.h"
+#include "logger.h"
+#include "config/config.h"
+#include "config/cv.h"
+#include "config/reader.h"
+#include "config/writer.h"
 
 // TODO change app namespace
 namespace ImGuiProject

@@ -1,11 +1,11 @@
-﻿#include "common.hpp"
+﻿#include "common.h"
 #ifdef _DEBUG
-#include "error.hpp"
-#include "config/config.hpp"
-#include "config/cv.hpp"
-#include "config/section.hpp"
-#include "gui/gui_font.hpp"
-#include "logger.hpp"
+#include "error.h"
+#include "config/config.h"
+#include "config/cv.h"
+#include "config/section.h"
+#include "gui/gui_font.h"
+#include "logger.h"
 
 // TODO change app namespace
 namespace ImGuiProject

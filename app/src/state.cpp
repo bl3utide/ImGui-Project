@@ -1,8 +1,8 @@
-﻿#include "common.hpp"
-#include "state.hpp"
-#include "config/config.hpp"
+﻿#include "common.h"
+#include "state.h"
+#include "config/config.h"
 #ifdef _DEBUG
-#include "logger.hpp"
+#include "logger.h"
 #endif
 
 // TODO change app namespace

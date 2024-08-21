@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "config/section.hpp"
+#include "config/section.h"
 
 // TODO change app namespace
 namespace ImGuiProject

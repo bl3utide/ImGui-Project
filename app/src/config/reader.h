@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "config/cv.hpp"
+#include "config/cv.h"
 
 // TODO change app namespace
 namespace ImGuiProject

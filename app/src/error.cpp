@@ -1,5 +1,5 @@
-﻿#include "common.hpp"
-#include "error.hpp"
+﻿#include "common.h"
+#include "error.h"
 
 // TODO change app namespace
 namespace ImGuiProject

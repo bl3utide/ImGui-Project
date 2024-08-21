@@ -1,5 +1,5 @@
-﻿#include "common.hpp"
-#include "util/gui_util.hpp"
+﻿#include "common.h"
+#include "util/gui_util.h"
 
 namespace GuiUtil
 {

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "error.hpp"
+#include "error.h"
 
 // TODO change app namespace
 namespace ImGuiProject

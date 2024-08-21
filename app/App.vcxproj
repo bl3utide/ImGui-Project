@@ -67,7 +67,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>common.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>common.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,7 +89,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)src;$(SolutionDir)deps\SDL\include;$(SolutionDir)deps\imgui;$(SolutionDir)deps\imgui\backends;$(SolutionDir)deps\plog\include;$(SolutionDir)deps\mINI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>common.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>common.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,21 +123,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="src\compressed\arrayed_font.hpp" />
-    <ClInclude Include="src\config\config.hpp" />
-    <ClInclude Include="src\config\cv.hpp" />
-    <ClInclude Include="src\config\reader.hpp" />
-    <ClInclude Include="src\config\section.hpp" />
-    <ClInclude Include="src\config\writer.hpp" />
-    <ClInclude Include="src\error.hpp" />
-    <ClInclude Include="src\gui\gui.hpp" />
-    <ClInclude Include="src\gui\gui_color.hpp" />
-    <ClInclude Include="src\gui\gui_font.hpp" />
-    <ClInclude Include="src\util\gui_util.hpp" />
-    <ClInclude Include="src\logger.hpp" />
-    <ClInclude Include="src\common.hpp" />
-    <ClInclude Include="src\state.hpp" />
-    <ClInclude Include="src\util\string_util.hpp" />
+    <ClInclude Include="src\compressed\arrayed_font.h" />
+    <ClInclude Include="src\config\config.h" />
+    <ClInclude Include="src\config\cv.h" />
+    <ClInclude Include="src\config\reader.h" />
+    <ClInclude Include="src\config\section.h" />
+    <ClInclude Include="src\config\writer.h" />
+    <ClInclude Include="src\error.h" />
+    <ClInclude Include="src\gui\gui.h" />
+    <ClInclude Include="src\gui\gui_color.h" />
+    <ClInclude Include="src\gui\gui_font.h" />
+    <ClInclude Include="src\util\gui_util.h" />
+    <ClInclude Include="src\logger.h" />
+    <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\state.h" />
+    <ClInclude Include="src\util\string_util.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

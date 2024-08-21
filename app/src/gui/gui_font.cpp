@@ -1,6 +1,6 @@
-﻿#include "common.hpp"
-#include "compressed/arrayed_font.hpp"
-#include "gui/gui_font.hpp"
+﻿#include "common.h"
+#include "compressed/arrayed_font.h"
+#include "gui/gui_font.h"
 
 // TODO change app namespace
 namespace ImGuiProject

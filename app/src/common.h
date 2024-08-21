@@ -26,8 +26,8 @@
 
 #include <mini/ini.h>
 
-#include "util/gui_util.hpp"
-#include "util/string_util.hpp"
+#include "util/gui_util.h"
+#include "util/string_util.h"
 
 namespace ImGuiProject
 {
